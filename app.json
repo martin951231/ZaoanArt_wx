@@ -1,0 +1,42 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/index/list/list",
+    "pages/index/details/details",
+    "pages/home/index",
+    "pages/find/index",
+    "pages/find/keepimg/keepimg",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#000",
+    "selectedColor": "#000",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首 页",
+        "iconPath": "image/index.png",
+        "selectedIconPath": "image/index_selectd.png"
+      },
+      {
+        "pagePath": "pages/home/index",
+        "text": "个人中心",
+        "iconPath": "image/home.png",
+        "selectedIconPath": "image/home_selectd.png"
+      },
+      {
+        "pagePath": "pages/find/index",
+        "text": "发 现",
+        "iconPath": "image/find.png",
+        "selectedIconPath": "image/find_selectd.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

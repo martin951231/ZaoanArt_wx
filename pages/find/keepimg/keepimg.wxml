@@ -1,0 +1,18 @@
+<!--pages/find/keepimg/keepimg.wxml-->
+<scroll-view scroll-y data-keep_id="{{keep_id}}" data-offset_start="{{imgcount}}" bindscrolltolower="loadimg3" style="height:{{height}}px;">
+  <view class="keepimg_view">
+    <text class="">{{keep_name}}</text>
+  </view>
+  <view class="keep_image">
+    <view style="width:50%;float:left" id="cate_img_left">
+        <view class="list" bindtap="jump_details" wx:for="{{cate_img_left}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
+          <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
+        </view>
+      </view>
+      <view style="width:50%;float:right" id="cate_img_right">
+        <view class="list" bindtap="jump_details" wx:for="{{cate_img_right}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
+          <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
+        </view>
+      </view>
+  </view>
+</scroll-view>

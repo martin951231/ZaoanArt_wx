@@ -1,0 +1,23 @@
+/* pages/find/index.wxss */
+.keep_view{
+  margin-bottom: 20px;
+}
+.keep_img{
+  width: 30%;
+  margin: 1%;
+}
+.keep_name{
+  font-size: 20px;
+  font-weight: bold;
+  display: block;
+  padding: 5px 10px;
+}
+.cate_view{
+  margin: 10px 0px;
+  width: 100%;
+  height:30px;
+  line-height: 30px;
+  text-align: center;
+  color:#fff;
+  background-color: #000;
+}

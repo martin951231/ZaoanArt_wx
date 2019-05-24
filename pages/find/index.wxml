@@ -1,0 +1,11 @@
+<!--pages/find/index.wxml-->
+<scroll-view scroll-y>
+  <view class="cate_view">推荐收藏夹</view>
+  <view class="keep_view" wx:for="{{keep_info}}" wx:for-index="index"  wx:for-item="keep_info_item" wx:key="item" data-keep_id="{{keep_info_item[0].keep_id}}" data-keep_name="{{keep_info_item[0].keep_name}}" bindtap="jump_keepimg">
+      <text class="keep_name">{{keep_info_item[0].keep_name}}</text>
+      <image mode="widthFix" class="keep_img" src='{{keep_info_item[0].image}}'></image>
+      <image mode="widthFix" class="keep_img" src='{{keep_info_item[1].image}}'></image>
+      <image mode="widthFix" class="keep_img" src='{{keep_info_item[2].image}}'></image>
+  </view>
+  <view class="cate_view">我的关注</view>
+</scroll-view>

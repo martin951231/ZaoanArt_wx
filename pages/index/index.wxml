@@ -1,0 +1,24 @@
+<!--index.wxml-->
+<view style="height:20px;">
+  <input style="width:80%;float:left" name="searchInfo" bindinput ="searchInfoInput" type="text" placeholder="搜你想要" class="search_input"></input>
+  <image bindtap="details_search" style="width:26px;float:right" src="../../image/search.png"  mode='widthFix'></image>
+</view>
+<view>
+   <view class="cate_view">分类</view>
+</view>
+<view style="width:100%;">
+  <view class="index_box" bindtap="jump_details" wx:for="{{cate_info}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
+          <image mode='widthFix' src="{{item.face_img}}" class="cate_img"></image>
+          <text class="cate_img_text">{{item.category_name}}</text>
+  </view>
+</view>
+<view>
+  <view class="theme_view">主题</view>
+</view>
+<view style="width:100%;">
+  <view class="index_box" bindtap="jump_details2" wx:for="{{theme_info}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
+          <image mode='widthFix' src="{{item.face_img}}" class="theme_img"></image>
+          <text class="theme_img_text">{{item.theme_name}}</text>
+  </view>
+</view>
+      

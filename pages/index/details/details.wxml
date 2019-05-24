@@ -1,0 +1,29 @@
+<!--pages/index/details/details.wxml-->
+<scroll-view scroll-y class="details_view" data-img_id="{{img_id}}" data-offset_start="{{imgcount}}" bindscrolltolower="loadimg2" style="height:{{height}}px;">
+  <view>
+    <text class="details_name">{{img_info.name}}</text>
+    <image mode="widthFix" class="details_image" src="{{img_info.image}}"></image>
+  </view>
+  <view>
+  <view class="fixed_view">
+    <view bindtap="loading_img" style="position: relative;width:80px;height:30px;">
+      <image style="width:30px;float:left;" src="../../../image/loading.png" mode="widthFix"></image>
+      <view style="inline-block;">保存</view>
+    </view>
+  </view>
+   <view class="cate_view">相似图片</view>
+</view>
+  <view class="like_image">
+    <view style="width:50%;float:left" id="cate_img_left">
+        <view class="list" bindtap="jump_details" wx:for="{{cate_img_left}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
+          <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
+        </view>
+      </view>
+      <view style="width:50%;float:right" id="cate_img_right">
+        <view class="list" bindtap="jump_details" wx:for="{{cate_img_right}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
+          <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
+        </view>
+      </view>
+  </view>
+  
+</scroll-view>

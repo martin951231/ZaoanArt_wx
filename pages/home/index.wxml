@@ -1,0 +1,7 @@
+<view class="home_view">
+  <view class="">
+    <input name="username" bindinput ="usernameInput" type="text" placeholder="用户名" class="login_input"></input>
+    <input name="password" bindinput ="passwordInput" type="text" placeholder="密码" class="login_input"></input>
+    <button class="login_btn">登录</button>
+  </view>
+</view>

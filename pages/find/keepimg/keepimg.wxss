@@ -1,0 +1,19 @@
+/* pages/find/keepimg/keepimg.wxss */
+.keepimg_view{
+  background-color:#dbdbdb;
+  height:50px;
+  padding:10px 20px;
+  margin-bottom: 10px;
+  display:flex;
+  align-items:center;
+  /* justify-content: center; */
+}
+.list{
+  box-shadow:2px 2px 2px #00000045;
+  padding:5px;
+}
+.img_item {
+  width: 100%;
+  display: inline-block;
+  vertical-align: top;
+}

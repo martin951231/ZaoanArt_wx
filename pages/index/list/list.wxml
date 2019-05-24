@@ -1,0 +1,22 @@
+<!--pages/home/list.wxml-->
+<scroll-view  scroll-y data-cate_id="{{cate_img_left[0].cate_id}}" data-theme_id="{{theme_id}}" data-search_val="{{search_val}}" data-offset_start="{{imgcount}}" data-img_info_left="{{cate_img_left}}" data-img_info_right="{{cate_img_right}}" style="height:{{height}}px;" class="content_list" bindscrolltolower="loadimg">
+  <view class="scroll_view" wx:if="{{cate_info}}">
+    <scroll-view class="cate_scroll_x" scroll-x>
+      <view class="list_box" data-cate_id="{{item.id}}" wx:for="{{cate_info}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}" bindtap="jump_list">
+                <image mode='widthFix' src="{{item.face_img}}" class="cate_img"></image>
+                <text class="cate_img_text">{{item.category_name}}</text>
+      </view>
+    </scroll-view>
+  </view>
+  <view style="width:50%;float:left" id="cate_img_left">
+    <view class="list" bindtap="jump_details" wx:for="{{cate_img_left}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
+      <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
+    </view>
+  </view>
+  <view style="width:50%;float:right" id="cate_img_right">
+    <view class="list" bindtap="jump_details" wx:for="{{cate_img_right}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
+      <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
+    </view>
+  </view>
+</scroll-view>
+
