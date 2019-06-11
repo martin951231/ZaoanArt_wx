@@ -1,14 +1,18 @@
 <!--pages/index/details/details.wxml-->
 <scroll-view scroll-y class="details_view" data-img_id="{{img_id}}" data-offset_start="{{imgcount}}" bindscrolltolower="loadimg2" style="height:{{height}}px;">
   <view>
-    <text class="details_name">{{img_info.name}}</text>
-    <image mode="widthFix" class="details_image" src="{{img_info.image}}"></image>
+    <scroll-view scroll-x class="details_name">{{img_info.name}}</scroll-view>
+    <image mode="widthFix" class="details_image" src="{{img_info.image}}" bindtap="enlarge" data-src="{{img_info.image}}"></image>
   </view>
   <view>
   <view class="fixed_view">
-    <view bindtap="loading_img" style="position: relative;width:80px;height:30px;">
-      <image style="width:30px;float:left;" src="../../../image/loading.png" mode="widthFix"></image>
-      <view style="inline-block;">保存</view>
+     <view bindtap="to_decoration" style="position: relative;width:100px;height:50px;">
+      <image style="width:40px;height:40px;float:left;margin-top:5px;" src="../../../image/decoration.png"></image>
+      <view style="inline-block;">装裱</view>
+    </view>
+    <view bindtap="to_keep" style="position: relative;width:100px;height:50px;">
+      <image style="width:40px;height:40px;float:left;margin-top:5px;" src="../../../image/to_keep.png"></image>
+      <view style="inline-block;">收藏</view>
     </view>
   </view>
    <view class="cate_view">相似图片</view>
@@ -27,3 +31,6 @@
   </view>
   
 </scroll-view>
+<modal hidden="{{hiddenmodalput}}" bindtap="addkeep" title="请选择要添加的收藏夹" no-cancel="true" confirmText="取消" confirmColor="#ccc" bindconfirm="confirm">
+  <view class="modal_view"  data-img_id="{{img_id}}" data-uid="{{item.uid}}" data-kid="{{item.id}}" wx:for="{{keep_info}}" wx-for-index="index" wx-for-item="item">{{item.keep_name}}</view>
+</modal>

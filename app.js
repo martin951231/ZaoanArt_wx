@@ -33,7 +33,9 @@ App({
       }
     })
   },
+  // '12$ZaoAn.u$2y$10$WTALghwt3/n6F2Y8O2B35ujrPayBkuDIg7sBFParzlWsLBjOgFuoS'
   globalData: {
+    token:null,
     userInfo: null,
     //接口地址
     // api_url: 'http://api.demo.com/v1/weixin'

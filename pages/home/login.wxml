@@ -1,0 +1,10 @@
+<view class="home_view">
+  <view>
+    <input name="username" bindinput ="usernameInput" type="text" placeholder="用户名" class="login_input"></input>
+    <view class="user_login">
+    <input name="password" bindinput ="passwordInput" type="text" placeholder="验证码" class="login_input2"></input>
+    <button class="code_btn" bindtap="sendcode">发送验证码</button>
+    </view>
+    <button bindtap="login" class="login_btn">登录</button>
+  </view>
+</view>

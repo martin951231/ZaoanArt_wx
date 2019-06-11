@@ -13,6 +13,7 @@ Page({
     theme_id:0,
     search_val:'',
     imgcount:0,
+    page_status:true,
     img_status:'',
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
@@ -67,7 +68,7 @@ Page({
     //后台查询子分类
     wx.request({
       url: getApp().globalData.api_url + '/getcate2',
-      data: { id: cate_id },
+      data: { id: cate_id},
       method: 'get',
       header: {
         'content-type': 'application/json'
@@ -81,7 +82,7 @@ Page({
       url: getApp().globalData.api_url + '/getcateimg',
       data: {
         id: cate_id,
-        start: 0
+        start: 0,
       },
       method: 'get',
       header: {
@@ -136,7 +137,7 @@ Page({
       url: getApp().globalData.api_url + '/getthemeimg',
       data: {
         id: theme_id,
-        start: 0
+        start: 0,
       },
       method: 'get',
       header: {
@@ -192,7 +193,7 @@ Page({
       url: getApp().globalData.api_url + '/getsearchimg',
       data: {
         val: search_val,
-        start: 0
+        start: 0,
       },
       method: 'get',
       header: {
@@ -240,19 +241,24 @@ Page({
   },
   // 滚动加载图片
   loadimg(e){
-    //获取id
-    var cate_id = e.currentTarget.dataset.cate_id
-    var theme_id = e.currentTarget.dataset.theme_id
-    var search_val = e.currentTarget.dataset.search_val
-    //获取开始的条目数
-    var offset_start = e.currentTarget.dataset.offset_start
-    if (this.img_status == 'cate'){
-      this.cate_loadimg(cate_id, offset_start)
-    } else if (this.img_status == 'theme'){
-      this.theme_loadimg(theme_id, offset_start)
-    } else if (this.img_status == 'search'){
-      this.search_loadimg(search_val, offset_start)
-    }
+    var page_status = this.data.page_status
+    if (page_status){
+      this.setData({
+        page_status: false
+      })
+      //获取id
+      var cate_id = e.currentTarget.dataset.cate_id
+      var theme_id = e.currentTarget.dataset.theme_id
+      var search_val = e.currentTarget.dataset.search_val
+      //获取开始的条目数
+      var offset_start = e.currentTarget.dataset.offset_start
+      if (this.img_status == 'cate') {
+        this.cate_loadimg(cate_id, offset_start)
+      } else if (this.img_status == 'theme') {
+        this.theme_loadimg(theme_id, offset_start)
+      } else if (this.img_status == 'search') {
+        this.search_loadimg(search_val, offset_start)
+      }
       wx.getSystemInfo({
         success: (res) => {
           this.setData({
@@ -260,6 +266,7 @@ Page({
           })
         }
       })
+    }
   },
   //cate搜索
   cate_loadimg(cate_id, offset_start){
@@ -305,6 +312,8 @@ Page({
         that.setData({
           cate_left: left_height,
           cate_right: right_height,
+          //设置是否加载完成
+          page_status: true
         });
       }
     })
@@ -353,6 +362,8 @@ Page({
         that.setData({
           cate_left: left_height,
           cate_right: right_height,
+          //设置是否加载完成
+          page_status: true
         });
       }
     })
@@ -401,6 +412,8 @@ Page({
         that.setData({
           cate_left: left_height,
           cate_right: right_height,
+          //设置是否加载完成
+          page_status: true
         });
       }
     })

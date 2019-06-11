@@ -1,17 +1,44 @@
 <!--pages/find/keepimg/keepimg.wxml-->
 <scroll-view scroll-y data-keep_id="{{keep_id}}" data-offset_start="{{imgcount}}" bindscrolltolower="loadimg3" style="height:{{height}}px;">
-  <view class="keepimg_view">
+  <modal hidden="{{hiddenmodalput1}}" data-keep_id="{{keep_id}}" title="从收藏夹中删除" confirm-text="删除" cancel-text="取消" bindcancel="cancelM1" bindconfirm="confirmM1">
+    <button></button>
+  </modal>
+  <modal hidden="{{hiddenmodalput2}}" data-keep_id="{{keep_id}}" no-cancel="true" title="移动到其他收藏夹" confirm-text="取消" bindconfirm="cancelM2">
+  <view class="modal_view" data-to_keep_id="{{item.id}}" wx:for="{{keep_info}}" wx-for-index="index" wx-for-item="item" bindtap="move_to_keep">{{item.keep_name}}</view>
+  </modal>
+  <modal hidden="{{hiddenmodalput3}}" data-keep_id="{{keep_id}}" no-cancel="true" title="复制到其他收藏夹"  confirm-text="取消" bindconfirm="cancelM3">
+  <view class="modal_view" data-to_keep_id="{{item.id}}" wx:for="{{keep_info1}}" wx-for-index="index" wx-for-item="item" bindtap="copy_to_keep">{{item.keep_name}}</view>
+  </modal>
+<button wx:if="{{is_mykeep==2}}" bindtap="batch_update">管理</button>
+<view wx:if="{{is_manage}}">
+  <button bindtap="batch_delete" class="batch" style="bottom:100px">删除</button>
+  <button bindtap="batch_move" class="batch" style="bottom:50px">移动到...</button>
+  <button bindtap="batch_copy" class="batch" style="bottom:0px">复制到...</button>
+</view>
+<view>
+</view>
+  <view class="keepimg_view"> 
     <text class="">{{keep_name}}</text>
   </view>
+  <checkbox-group wx:if="{{is_manage}}">
+    <checkbox bindtap="checkbox_all" checked="{{is_checkbox_all}}"/>全选
+  </checkbox-group>
   <view class="keep_image">
     <view style="width:50%;float:left" id="cate_img_left">
-        <view class="list" bindtap="jump_details" wx:for="{{cate_img_left}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
-          <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
+        <view class="list"  wx:for="{{cate_img_left}}" wx-for-index="index" wx-for-item="item" wx:key="item">
+        <checkbox-group wx:if="{{is_manage}}">
+          <checkbox class="checkbox" value="{{item.id}}" bindtap="checkbox" data-left_index="{{index}}" checked="{{item.checked}}"/>
+        </checkbox-group>
+          <image class="img_item" bindtap="jump_details" id="{{item.id}}" src="{{item.image}}" mode="widthFix"></image>
         </view>
-      </view>
+
+    </view>
       <view style="width:50%;float:right" id="cate_img_right">
-        <view class="list" bindtap="jump_details" wx:for="{{cate_img_right}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
-          <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
+        <view class="list"  wx:for="{{cate_img_right}}" wx-for-index="index" wx-for-item="item" wx:key="item">
+        <checkbox-group wx:if="{{is_manage}}">
+          <checkbox class="checkbox" value="{{item.id}}" bindtap="checkbox2" data-right_index="{{index}}" checked="{{item.checked}}"/>
+        </checkbox-group>
+          <image class="img_item" bindtap="jump_details" id="{{item.id}}" src="{{item.image}}" mode="widthFix"></image>
         </view>
       </view>
   </view>

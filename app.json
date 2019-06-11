@@ -3,7 +3,9 @@
     "pages/index/index",
     "pages/index/list/list",
     "pages/index/details/details",
+    "pages/index/details/decoration",
     "pages/home/index",
+    "pages/home/login",
     "pages/find/index",
     "pages/find/keepimg/keepimg",
     "pages/logs/logs"

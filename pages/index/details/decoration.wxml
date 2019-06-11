@@ -1,0 +1,20 @@
+<!--pages/index/details/decoration.wxml-->
+<view></view>
+<canvas style="width:{{canvas_width}}px;height:{{canvas_height}}px;position:absolute;margin-top:50px"  canvas-id='customCanvas'></canvas>
+<scroll-view scroll-y class="decoration_view">
+  <view style="margin-top:50px;background-color:#fff;">
+    <image class="decoration_image" mode="widthFix" src="{{default_img}}" bindtap="enlarge" data-src="{{default_img}}"></image>
+  </view>
+  <view class="scroll_view">
+  <scroll-view scroll-x class="decoration_scroll_x">
+    <view data-series_id="{{item.id}}" bindtap="up_border" class="list_box" wx:for="{{border_series}}" wx-for-index="index" wx-for-item="item">
+    <button style="background-color:{{border_status==item.id?'#000':'#fff'}};color:{{border_status==item.id?'#fff':'#000'}}">{{item.series_name}}</button>
+    </view>
+  </scroll-view>
+   <scroll-view scroll-x class="decoration_scroll_x">
+    <view class="list_box" bindtap="decoration" data-border_info="{{item}}" wx:for="{{border_img}}" wx-for-index="index" wx-for-item="item">
+      <image style="width:80px" mode="widthFix" src="{{item.preview_img}}"></image>
+    </view>
+  </scroll-view>
+  </view>
+</scroll-view>

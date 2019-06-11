@@ -9,11 +9,28 @@
   /* justify-content: center; */
 }
 .list{
-  box-shadow:2px 2px 2px #00000045;
+  /* box-shadow:2px 2px 2px #00000045; */
   padding:5px;
 }
 .img_item {
   width: 100%;
   display: inline-block;
   vertical-align: top;
+}
+.batch{
+  position:fixed;
+  height:50px;
+  width:100%;
+  z-index:999;
+}
+.checkbox{
+  position:absolute;
+}
+.modal_view{
+  width:100%;
+  height:40px;
+  line-height:40px;
+  font-size:20px;
+  color:#000;
+  text-align:center;
 }
