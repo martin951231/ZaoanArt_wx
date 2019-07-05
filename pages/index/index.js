@@ -85,16 +85,34 @@ Page({
       url: './list/list?cate_id=0&theme_id=' + id +'&search=0',
     })
   },
-  //获取搜索内容
-  searchInfoInput: function (e) {
-    this.setData({
-      searchInfo: e.detail.value
+  //跳转到用户指南页面
+  user_guide() {
+    wx.navigateTo({
+      url: './about/user_guide',
     })
   },
-  details_search(){
-    var _search = this.data.searchInfo
+  //跳转到关于我们页面
+  about_us() {
     wx.navigateTo({
-      url: './list/list?cate_id=0&theme_id=0&search=' + _search,
+      url: './about/about_us',
+    })
+  },
+  //跳转到资讯热点页面
+  hotspot() {
+    wx.navigateTo({
+      url: './about/hotspot',
+    })
+  },
+  //跳转到网站声明页面
+  statement() {
+    wx.navigateTo({
+      url: './about/statement',
+    })
+  },
+  //跳转到留言
+  to_leave_message(){
+    wx.navigateTo({
+      url: '../leave_message',
     })
   },
   /**

@@ -1,0 +1,10 @@
+<!--pages/index/about/user_guide.wxml-->
+<view style="padding:20px 0px 0px 10px;">
+  <view style="text-align:center;font-size:25px;margin-bottom:20px;">用户指南</view>
+  <view class="guide_text">1、根据需要，按照画作类别、内容主题、色调、版型、关键词（搜索单个关键字 加 筛选分类 更加准确）等分类条件进行筛选。选择出细分的图片。</view>
+  <view class="guide_text">2、根据需要建立收藏夹，收藏有意向的画作，方便查看和分享。tips：可根据项目需要建立项目收藏夹并进行项目组内分享。</view>
+  <view class="guide_text">3、对已选择的画作虚拟装裱，查看装裱完成效果图。（小程序端只支持简化装裱效果图，如需自由裁切、定制尺寸等高级装裱功能，请于PC端登陆www.ZAOANART.com官方网站）  tips：装裱完成效果图可以直接截图贴在方案当中，方便快捷、谁用谁知道。^_^</view>
+  <view class="guide_text">4、全自动报价系统，告别更改方案后的反复询价。（PC端）</view>
+  <view class="guide_text">5、装裱效果图与实际装裱结果高度一致。更改尺寸、比例、装裱细节等自由把控，装裱效果图所见即所得。（pc端）</view>
+</view>
+

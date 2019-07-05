@@ -1,0 +1,7 @@
+/* pages/index/about/user_guide.wxss */
+.guide_text{
+  margin:10px 0px;
+  line-height:30px;
+  font-size:18px;
+  color:#646464;
+}

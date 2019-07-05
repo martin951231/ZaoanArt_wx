@@ -1,0 +1,7 @@
+<!--pages/find/about/about_us.wxml-->
+<view style="padding:20px 0px 0px 10px;">
+  <view style="text-align:center;font-size:25px;margin-bottom:20px;">关于我们</view>
+  <view class="about_text" style="line-height:30px;">早安艺术（www.ZAOANART.com）是一个图片交流分享平台，网站以油画、国画、装饰画、名家名画、创意摄影等各类高清素材为主要内容。专为相关用户提供各类素材，满足用户不同的素材需求，查看虚拟装裱效果等服务。以“方便快捷"为准则，为广大用户提供一站式选图服务。</view>
+  <view class="about_text">官方 qq  号码： 2945296672</view>
+  <view class="about_text" bindtap='to_leave_message'>联系我们</view>
+</view>

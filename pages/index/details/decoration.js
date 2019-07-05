@@ -15,6 +15,7 @@ Page({
     height:0,
     canvas_width: 0,
     canvas_height:0,
+    canvas_display:'none',
     click_img:[],
   },
 
@@ -66,6 +67,9 @@ Page({
   //点击装裱
   decoration(e){
     var that = this
+    that.setData({
+      canvas_display: 'block',
+    });
     var obj = wx.createSelectorQuery();
     obj.select('.decoration_image').boundingClientRect();
     obj.exec(function (rect) {
@@ -103,16 +107,86 @@ Page({
         success: function (res) {
           var array = wx.base64ToArrayBuffer(res.data.url)
           var base64 = wx.arrayBufferToBase64(array)
-
           wx.getImageInfo({
             src: 'https://www.zaoanart.com/admin/test/bgimg.png',
             success: function (res) {
+              wx.getImageInfo({
+                src: 'https://www.zaoanart.com/admin/test/logo.png',
+                success: function (res) {
+                  // ctx.beginPath()//开始创建一个路径
+                  // ctx.fillRect(0, 0, 30, 12);
+                  // ctx.setShadow(0, 0, 0, '#ccc')
+                  ctx.drawImage(res.path, 5, 5, 60, 24)//绘制图片
+                  ctx.draw(true)
+                }
+              })
               ctx.beginPath()//开始创建一个路径
               ctx.fillStyle = "#FFFFFF";
               ctx.fillRect(0, 0, box_width + 40, box_height + 40);
-              ctx.setShadow(1, 10, 5, '#ccc')
-              ctx.drawImage(res.path, 40, 40, box_width - 40, box_height - 40)//绘制图片
-              ctx.draw(false, function () {
+              // ctx.setShadow(0, 10, 5, '#ccc')
+              // //下边阴影
+              let grd = ctx.createLinearGradient(40, box_height, 40, box_height + 10)
+              grd.addColorStop(0, "#ababab");
+              grd.addColorStop(0.8, "white");
+              //下边
+              ctx.beginPath();
+              ctx.strokeStyle = "#fff";
+              ctx.lineWidth = 0.1;
+              ctx.setLineCap('round');
+              ctx.setLineJoin('round');
+              ctx.moveTo(40, box_height);
+              ctx.lineTo(45, box_height + 10);
+              ctx.lineTo(box_width + 2, box_height + 10);
+              ctx.lineTo(box_width + 4, box_height + 8);
+              ctx.lineTo(box_width, box_height);
+              ctx.fillStyle = grd;
+              ctx.fill();
+              //先关闭绘制路径。
+              ctx.closePath();
+              //最后，按照绘制路径画出直线
+              ctx.stroke();
+              // //右边阴影
+              let grd2 = ctx.createLinearGradient(box_width, 40, box_width + 5, 40)
+              grd2.addColorStop(0.1, "#ababab");
+              grd2.addColorStop(0.8, "white");
+              //右边
+              ctx.beginPath();
+              ctx.strokeStyle = "#fff";
+              ctx.lineWidth = 0.1;
+              ctx.setLineCap('round');
+              ctx.setLineJoin('round');
+              ctx.moveTo(box_width, 40);
+              ctx.lineTo(box_width, box_height + 1);
+              ctx.lineTo(box_width + 3, box_height + 8);
+              ctx.lineTo(box_width + 5, box_height + 6);
+              ctx.lineTo(box_width + 5, 50);
+              ctx.fillStyle = grd2;
+              ctx.fill();
+              //先关闭绘制路径。
+              ctx.closePath();
+              //最后，按照绘制路径画出直线
+              ctx.stroke();
+              // //直线(下)
+              let grd3 = ctx.createLinearGradient(box_width - 3, box_height, box_width + 5, box_height + 9)
+              grd3.addColorStop(0.1, "#ababab");
+              grd3.addColorStop(0.8, "white");
+              //直线
+              ctx.beginPath();
+              ctx.setLineCap('round');
+              ctx.setLineJoin('round');
+              ctx.strokeStyle = grd3;
+              ctx.lineWidth = 2;
+              ctx.moveTo(box_width, box_height);
+              ctx.lineTo(box_width + 4, box_height + 9);
+              ctx.fillStyle = grd3;
+              ctx.fill();
+              //先关闭绘制路径。
+              ctx.closePath();
+              //最后，按照绘制路径画出直线
+              ctx.stroke();
+              //绘制图片
+              ctx.drawImage(res.path, 40, 40, box_width - 40, box_height - 40)
+              ctx.draw(true, function () {
                 setTimeout(function () {
                   wx.canvasToTempFilePath({
                     canvasId: 'customCanvas',
@@ -120,8 +194,13 @@ Page({
                       var tempFilePath = res.tempFilePath
                       // var tempFilePath2 = wx.getFileSystemManager().readFileSync(tempFilePath, "base64")
                       // console.log('data:image/png;base64,' + tempFilePath2)
+                      
                       wx.hideLoading()
-                      that.setData({ default_img: 'data:image/png;base64,' + base64, click_img: tempFilePath });
+                      that.setData({ 
+                        default_img: 'data:image/png;base64,' + base64, 
+                        click_img: tempFilePath,
+                        canvas_display: 'none',
+                      });
                     },
                     fail: function (res) {
                       console.log(res);

@@ -1,0 +1,6 @@
+/* pages/find/about/about_us.wxss */
+.about_text{
+  margin:10px 0px;
+  font-size:18px;
+  color:#646464;
+}

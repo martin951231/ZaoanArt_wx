@@ -1,23 +1,23 @@
 <!--pages/index/details/details.wxml-->
-<scroll-view scroll-y class="details_view" data-img_id="{{img_id}}" data-offset_start="{{imgcount}}" bindscrolltolower="loadimg2" style="height:{{height}}px;">
+<scroll-view scroll-y class="details_view" data-img_id="{{img_id}}" data-offset_start="{{imgcount}}" bindscrolltolower="loadimg2" style="height:{{height}}px;margin-top:30px;">
   <view>
-    <scroll-view scroll-x class="details_name">{{img_info.name}}</scroll-view>
+    <!-- <scroll-view scroll-x class="details_name">{{img_info.name}}</scroll-view> -->
     <image mode="widthFix" class="details_image" src="{{img_info.image}}" bindtap="enlarge" data-src="{{img_info.image}}"></image>
   </view>
-  <view>
-  <view class="fixed_view">
-     <view bindtap="to_decoration" style="position: relative;width:100px;height:50px;">
-      <image style="width:40px;height:40px;float:left;margin-top:5px;" src="../../../image/decoration.png"></image>
+  <view class="fixed_view" style="width:80%;">
+     <view bindtap="to_decoration" style="width:80px;height:50px;float:right">
+      <image style="width:30px;height:30px;float:left;margin-top:5px;" src="../../../image/decoration.png"></image>
       <view style="inline-block;">装裱</view>
     </view>
-    <view bindtap="to_keep" style="position: relative;width:100px;height:50px;">
-      <image style="width:40px;height:40px;float:left;margin-top:5px;" src="../../../image/to_keep.png"></image>
+    <view bindtap="to_keep" style="width:80px;height:50px;float:right">
+      <image style="width:30px;height:30px;float:left;margin-top:5px;" src="../../../image/to_keep.png"></image>
       <view style="inline-block;">收藏</view>
     </view>
   </view>
+  <view style="margin:0px 15px;">
    <view class="cate_view">相似图片</view>
 </view>
-  <view class="like_image">
+  <view class="like_image clearfix">
     <view style="width:50%;float:left" id="cate_img_left">
         <view class="list" bindtap="jump_details" wx:for="{{cate_img_left}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
           <image class="img_item" src="{{item.image}}" mode="widthFix"></image>

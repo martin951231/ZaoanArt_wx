@@ -7,7 +7,10 @@ Page({
    */
   data: {
     keep_info:[],
+    is_display:true,
     hasUserInfo: false,
+    inputShowed:false,
+    searchInfo: '',
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
 
@@ -25,13 +28,70 @@ Page({
       url: './keepimg/keepimg?keep_id=' + keep_id + '&keep_name=' + keep_name + '&is_mykeep=1',
     })
   },
+  // //跳转到选图方式页面
+  // select_status(){
+  //   wx.navigateTo({
+  //     url: './about/select_status',
+  //   })
+  // },
+  // //跳转到关于我们页面
+  // about_us(){
+  //   wx.navigateTo({
+  //     url: './about/about_us',
+  //   })
+  // },
+  // //跳转到资讯热点页面
+  // hotspot(){
+  //   wx.navigateTo({
+  //     url: './about/hotspot',
+  //   })
+  // },
+  // //跳转到网站声明页面
+  // statement(){
+  //   wx.navigateTo({
+  //     url: './about/statement',
+  //   })
+  // },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
 
   },
-
+  //获取搜索内容
+  searchInfoInput: function (e) {
+    this.setData({
+      searchInfo: e.detail.value
+    })
+  },
+  //搜索
+  details_search() {
+    this.setData({
+      is_display: false,
+      inputShowed:true
+    })
+    // var _search = this.data.searchInfo
+    // wx.navigateTo({
+    //   url: '../index/list/list?cate_id=0&theme_id=0&search=' + _search,
+    // })
+  },
+  //搜索框失去焦点
+  inputHide(){
+    this.setData({
+      is_display: true,
+      inputShowed: false,
+    })
+  },
+  //搜索
+  details_search2() {
+    this.setData({
+      is_display: true
+    })
+    var _search = this.data.searchInfo
+    wx.navigateTo({
+      url: '../index/list/list?cate_id=0&theme_id=0&search=' + _search,
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */

@@ -13,6 +13,7 @@ Page({
     hiddenmodalput: true,
     hiddenmodalput2: true,
     hiddenmodalput3: true,
+    modalstatus:false,
     keepname: '',
     keepname2:'',
     keep_id:null
@@ -24,12 +25,12 @@ Page({
   onLoad: function (options) {
     var that = this
     var token = getApp().globalData.token
-    if (!token) {
-      //跳转到登录页
-      wx.navigateTo({
-        url: './login',
-      })
-    }
+    // if (!token) {
+    //   //跳转到登录页
+    //   wx.navigateTo({
+    //     url: './login',
+    //   })
+    // }
     that.wx_login()
   },
   wx_login:function(){
@@ -45,7 +46,6 @@ Page({
             'content-type': 'application/json'
           },
           success: function (res) {
-            console.log(res)
             that.setData({ openid: res.data.openid, session_key: res.data.session_key });
           }
         })
@@ -105,10 +105,11 @@ Page({
       wx.showLoading({
         title: '正在添加...',
       });
+      var that = this
       //获取我的收藏夹
       wx.request({
         url: getApp().globalData.api_url + '/addnewkeep',
-        data: { token: token, keep_name: this.data.keepname },
+        data: { token: token, keep_name: that.data.keepname },
         method: 'get',
         header: {
           'content-type': 'application/json'
@@ -127,6 +128,7 @@ Page({
               icon: 'success',
               duration: 1000
             });
+            that.getmykeep()
           } else if (res.data == 2) {
             wx.showToast({
               title: '添加失败',
@@ -143,7 +145,7 @@ Page({
     var token = getApp().globalData.token
     if (!this.data.keepname2) {
       wx.showToast({
-        title: '收藏夹名不能为空2',
+        title: '收藏夹名不能为空',
         icon: 'none',
         duration: 1000
       });
@@ -154,10 +156,11 @@ Page({
       wx.showLoading({
         title: '正在修改...',
       });
+      var that = this
       //获取我的收藏夹
       wx.request({
         url: getApp().globalData.api_url + '/updatekeep',
-        data: { token: token, keep_id: this.data.keep_id ,keep_name: this.data.keepname2 },
+        data: { token: token, keep_id: that.data.keep_id, keep_name: that.data.keepname2 },
         method: 'get',
         header: {
           'content-type': 'application/json'
@@ -176,6 +179,7 @@ Page({
               icon: 'success',
               duration: 1000
             });
+            that.getmykeep()
           } else if (res.data == 2) {
             wx.showToast({
               title: '修改失败',
@@ -197,10 +201,11 @@ Page({
       wx.showLoading({
         title: '删除中...',
       });
+    var that = this
       //获取我的收藏夹
       wx.request({
         url: getApp().globalData.api_url + '/deletekeep',
-        data: { token: token, keep_id: this.data.keep_id},
+        data: { token: token, keep_id: that.data.keep_id},
         method: 'get',
         header: {
           'content-type': 'application/json'
@@ -213,6 +218,7 @@ Page({
               icon: 'none',
               duration: 1000
             });
+            that.getmykeep()
           } else if (res.data == 1) {
             wx.showToast({
               title: '删除失败',
@@ -237,16 +243,13 @@ Page({
   },
   //微信登录
   getPhoneNumber: function (e) {//点击获取手机号码按钮
-  console.log(e)
+    console.log(e)
     var that = this;
     wx.checkSession({
       success: function () {
-        console.log(e.detail.errMsg)
-        console.log(e.detail.iv)
-        console.log(e.detail.encryptedData)
         var ency = e.detail.encryptedData;
         var iv = e.detail.iv;
-        var sessionk = that.data.sessionKey;
+        var sessionk = that.data.session_key;
         if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
           that.setData({
             modalstatus: true
@@ -254,23 +257,41 @@ Page({
         } else {//同意授权
           wx.request({
             method: "GET",
-            url: 'https://xxx/wx/deciphering.do',
+            url: getApp().globalData.api_url + '/decrypttel',
             data: {
               encrypdata: ency,
               ivdata: iv,
-              sessionkey: sessionk
+              session_key: sessionk
             },
             header: {
               'content-type': 'application/json' // 默认值
             },
             success: (res) => {
-              console.log("解密成功~~~~~~~将解密的号码保存到本地~~~~~~~~");
-              console.log(res);
-              var phone = res.data.phoneNumber;
-              console.log(phone);
-            }, fail: function (res) {
+              if(res.data == 1){
+                wx.showToast({
+                  title: '登陆失败',
+                  icon: 'none',
+                  duration: 1000
+                });
+              }else if(res.data == 2){
+                wx.showToast({
+                  title: '该手机号被禁止登录',
+                  icon: 'none',
+                  duration: 1000
+                });
+              }else{
+                wx.showToast({
+                  title: '登录成功',
+                  icon: 'success',
+                  duration: 1000
+                });
+                getApp().globalData.token = res.data
+                that.getmykeep()
+              }
+              console.log(res)
+            }, 
+            fail: function (res) {
               console.log("解密失败~~~~~~~~~~~~~");
-              console.log(res);
             }
           });
         }
@@ -358,10 +379,10 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    wx.showLoading({
-      title: '正在修改...',
-    });
-    this.getmykeep()
+    // wx.showLoading({
+    //   title: '正在修改...',
+    // });
+    // this.getmykeep()
     // wx.showToast({
     //   title: 'loading....',
     //   icon: 'loading'

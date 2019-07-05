@@ -18,6 +18,7 @@
   width: 100%;
   display: inline-block;
   vertical-align: top;
+  height:auto;
 }
 .cate_view{
   margin: 10px 0px;
@@ -25,18 +26,18 @@
   height:30px;
   line-height: 30px;
   text-align: center;
-  color:#fff;
-  background-color: #000;
+  color:#000;
+  background-color: rgb(240,240,240);
 }
 .fixed_view{
-  position:fixed;
-  bottom:0px;
-  background-color:#fff;
-  width:100%;
-  display:flex;
+  /* position:fixed; */
+  /* bottom:0px; */
+  /* background-color:#fff; */
+  /* width:100%; */
+  display:inline-block;
   height:50px;
   line-height:50px;
-  justify-content: center;
+  /* justify-content: center; */
 }
 .modal_view{
   width:100%;
@@ -45,4 +46,13 @@
   font-size:20px;
   color:#000;
   text-align:center;
+}
+.like_image{
+  margin:0px 10px;
+}
+.clearfix:after { 
+  display:block; 
+  height : 0; 
+  clear : both; 
+  content : '' 
 }

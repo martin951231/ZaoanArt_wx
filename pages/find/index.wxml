@@ -1,11 +1,31 @@
 <!--pages/find/index.wxml-->
 <scroll-view scroll-y>
+<view style="text-align:center">
+  <view style="display:inline-block">
+    <input style="display:{{is_display?'none':'inline-block'}};width:150px;height:80px;" focus="{{inputShowed}}" bindblur="inputHide" name="searchInfo" bindinput ="searchInfoInput" bindconfirm='details_search2'  type="text" placeholder="" class="search_input"></input>
+  </view>
+  <image bindtap="details_search" style="display:{{is_display?'inline-block':'none'}};width:80px;" src="../../image/search.png"  mode='widthFix'></image>
+</view>
   <view class="cate_view">推荐收藏夹</view>
   <view class="keep_view" wx:for="{{keep_info}}" wx:for-index="index"  wx:for-item="keep_info_item" wx:key="item" data-keep_id="{{keep_info_item[0].keep_id}}" data-keep_name="{{keep_info_item[0].keep_name}}" bindtap="jump_keepimg">
       <text class="keep_name">{{keep_info_item[0].keep_name}}</text>
-      <image mode="widthFix" style="width:{{keep_info_item[0].image?'30%':'0px'}};height:{{keep_info_item[2].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[0].image}}'></image>
-      <image mode="widthFix" style="width:{{keep_info_item[1].image?'30%':'0px'}};height:{{keep_info_item[2].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[1].image}}'></image>
-      <image mode="widthFix" style="width:{{keep_info_item[2].image?'30%':'0px'}};height:{{keep_info_item[2].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[2].image}}'></image>
+      <image mode="widthFix" style="width:{{keep_info_item[0].image?'22%':'0px'}};height:{{keep_info_item[0].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[0].image}}'></image>
+      <image mode="widthFix" style="width:{{keep_info_item[1].image?'22%':'0px'}};height:{{keep_info_item[1].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[1].image}}'></image>
+      <image mode="widthFix" style="width:{{keep_info_item[2].image?'22%':'0px'}};height:{{keep_info_item[2].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[2].image}}'></image>
+      <image mode="widthFix" style="width:{{keep_info_item[3].image?'22%':'0px'}};height:{{keep_info_item[3].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[3].image}}'></image>
   </view>
-  <view class="cate_view">我的关注</view>
+  <!-- <view class="btm_about">
+    <image src='../../image/zaoanart_logo_en_big.png' style='width:190px;margin-left:10px;height:50px'></image>
+    <view style="margin-left:20px;">
+      <view>
+        <text class="about_text" bindtap="select_status">选图方式</text>
+        <text class="about_text" bindtap="about_us">关于我们</text>
+      </view>
+      <view>
+        <text class="about_text" bindtap="hotspot">咨询热点</text>
+        <text class="about_text" bindtap="statement">网站声明</text>
+      </view>
+    </view>
+  </view> -->
+  <!-- <view class="cate_view">我的关注</view> -->
 </scroll-view>

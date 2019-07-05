@@ -39,6 +39,6 @@ App({
     userInfo: null,
     //接口地址
     // api_url: 'http://api.demo.com/v1/weixin'
-    api_url:'http://api.zaoanart.com/v1/weixin'
+    api_url:'https://api.zaoanart.com/v1/weixin'
   }
 })

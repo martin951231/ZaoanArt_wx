@@ -1,0 +1,15 @@
+<!--pages/find/about/statement.wxml-->
+<view style="padding:20px 0px 0px 10px;">
+  <view style="text-align:center;font-size:25px;margin-bottom:20px;">网站声明</view>
+  <view style="text-align:center;font-size:22px;margin-bottom:15px;">隐私保护</view>
+  <view class="statement_text">本隐私保护声明适用于使用（早安艺术）网站（以下简称本网站）提供的各种服务的用户。我们尊重、保护用户的个人隐私，并郑重承诺，除非有法律或程序要求，否则未经用户授权我们不会公布与用户个人有关的资料。我们将定期检查隐私保护措施，切实保证用户个人资料隐私保护。</view>
+  <view class="statement_text">（1）当用户在本网站的行为违反了《计算机信息网络国际联网安全保护管理办法》、《互联网信息服务管理办法》，或可能损害或妨碍其他网友的权益或导致他人遭受损害，披露用户的个人资料是为了辨识、联络或采取法律行动所必要的行动时。</view>
+  <view class="statement_text">（2）法律法规所规定的必须披露或公开的个人信息。</view>
+  <view class="statement_text">（3）当司法机关或其它授权机关依法执行公务，要求网站公开特定个人资料时。</view>
+  <view class="statement_text">（4） 本网站具有全面的技术保护措施和安全维护机制来保证用户信息的内容，但由于不可抗力或者因计算机病毒感染、黑客攻击等特殊外力侵扰，导致用户信息破坏、泄密并受到损失的，本网站不承担任何法律责任。</view>
+  <view style="text-align:center;font-size:22px;margin-bottom:15px;">免责条款</view>
+  <view class="statement_text"> 1.本站图片均来自商用数据库等各种渠道。本网不拥有此类作品的版权。本网无法事先审查此类作品及作品信息的版权等问题，但会积极协助用户解决可能遇到的问题。</view>
+  <view class="statement_text"> 2.作品均上传用于学习交流之用，勿作它用；若需商业使用，需获得版权拥有者授权，并遵循国家相关法律、法规之规定。如因非法使用引起纠纷，一切后果由使用者承担。</view>
+  <view class="statement_text"> 3.及时清理转载盗版。本网作为作品共享网络服务提供者，对非法转载、盗版行为的发生不具备监控能力。但是当版权拥有者提出侵权指控并出示充分的版权证明材料时，本网将会立即移除盗版和非法转载作品。本网对他人在网站上实施的此类侵权行为不承担法律责任。</view>
+  <view class="statement_text">4.版权投诉的途径。如果版权拥有者发现自己作品被侵权，请及时向本网提出权利通知，并将身份证明、权属证明。本网在收到上述法律文件后，在五个工作日内移除相关涉嫌侵权的内容。</view>
+</view>

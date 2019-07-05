@@ -38,6 +38,16 @@ Page({
     var is_mykeep = options.is_mykeep
     this.setData({ keep_id: keep_id, keep_name: keep_name, is_mykeep: is_mykeep, options: options});
     this.getindex(keep_id, keep_name, is_mykeep)
+    console.log(is_mykeep)
+    if(is_mykeep == 2){
+      wx.setNavigationBarTitle({
+        title: '我的收藏夹'
+      })
+    }else{
+      wx.setNavigationBarTitle({
+        title: '推荐收藏夹'
+      })
+    }
   },
   //获取首屏数据
   getindex(keep_id, keep_name, is_mykeep){

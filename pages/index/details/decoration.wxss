@@ -2,7 +2,7 @@
 .decoration_image{
   width: 80%;
   margin:10px 0px;
-  box-shadow:1px 10px 5px #ccc;
+  box-shadow:3px 10px 5px #ababab;
 }
 .decoration_view{
   text-align:center;
@@ -28,7 +28,10 @@
   overflow: hidden;
   padding: 2px;
   white-space: nowrap;
-  margin-top:50px;
+  /* margin-top:50px; */
   /* position:fixed;
   bottom:0px;  */
+}
+.text_info{
+  display:block;
 }

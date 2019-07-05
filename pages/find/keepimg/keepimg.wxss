@@ -1,6 +1,6 @@
 /* pages/find/keepimg/keepimg.wxss */
 .keepimg_view{
-  background-color:#dbdbdb;
+  background-color:rgb(240,240,240);
   height:50px;
   padding:10px 20px;
   margin-bottom: 10px;
@@ -16,6 +16,7 @@
   width: 100%;
   display: inline-block;
   vertical-align: top;
+  height:auto;
 }
 .batch{
   position:fixed;

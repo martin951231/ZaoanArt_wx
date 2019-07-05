@@ -55,6 +55,22 @@ Page({
   login() {
     var username = this.data.username
     var password = this.data.password
+    if (!username){
+      wx.showToast({
+        title: '手机号不能为空',
+        icon: 'success',
+        duration: 1000
+      });
+      return false
+    }
+    if (!password) {
+      wx.showToast({
+        title: '手机号不能为空',
+        icon: 'success',
+        duration: 1000
+      });
+      return false
+    }
     //验证验证码
     wx.request({
       url: 'https://api.zaoanart.com/v1/code/vercode',
@@ -92,6 +108,12 @@ Page({
           });
         }
       }
+    })
+  },
+  onShow: function () {
+    this.setData({
+      username: null,
+      password: null
     })
   },
   //获取用户名

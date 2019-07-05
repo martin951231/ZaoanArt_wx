@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/leave_message",
     "pages/index/list/list",
     "pages/index/details/details",
     "pages/index/details/decoration",
@@ -8,7 +9,11 @@
     "pages/home/login",
     "pages/find/index",
     "pages/find/keepimg/keepimg",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/index/about/user_guide",
+    "pages/index/about/about_us",
+    "pages/index/about/hotspot",
+    "pages/index/about/statement"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -27,16 +32,16 @@
         "selectedIconPath": "image/index_selectd.png"
       },
       {
-        "pagePath": "pages/home/index",
-        "text": "个人中心",
-        "iconPath": "image/home.png",
-        "selectedIconPath": "image/home_selectd.png"
-      },
-      {
         "pagePath": "pages/find/index",
         "text": "发 现",
         "iconPath": "image/find.png",
         "selectedIconPath": "image/find_selectd.png"
+      },
+      {
+        "pagePath": "pages/home/index",
+        "text": "个人中心",
+        "iconPath": "image/home.png",
+        "selectedIconPath": "image/home_selectd.png"
       }
     ]
   },

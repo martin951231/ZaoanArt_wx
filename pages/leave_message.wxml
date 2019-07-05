@@ -1,0 +1,6 @@
+<!--pages/leave_message.wxml-->
+<view class="message_view">
+    <text>{{max_length}}/100</text>
+    <textarea class="message_text" placeholder="请把您的建议告诉我们" maxlength="100" bindinput ="message_text" auto-height="true"></textarea>
+    <button class="message_btn" bindtap ="to_message">确认留言</button>
+</view>

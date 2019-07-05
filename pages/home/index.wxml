@@ -15,8 +15,8 @@
    <modal hidden="{{hiddenmodalput3}}" title="删除收藏夹" confirm-text="删除" cancel-text="取消" bindcancel="cancelM3" bindconfirm="confirmM3">
       <text>删除收藏夹将会删除收藏夹里所有图片,您确定要删除吗?</text>
    </modal>
-  <scroll-view scroll-y>
   <button bindtap="addkeep" class="addkeep">＋</button>
+  <scroll-view scroll-y>
     <view class="cate_view">我的收藏夹</view>
     <view class="keep_view" wx:for="{{keep_info}}" wx:for-index="index"  wx:for-item="keep_info_item" wx:key="item"  >
         <view class="keep_name">
@@ -27,9 +27,10 @@
           </view>
         </view>
         <view style="margin-top:15px;min-height:100px;" bindtap="jump_keepimg" data-keep_id="{{keep_info_item[0].keep_id}}" data-keep_name="{{keep_info_item[0].keep_name}}">
-          <image mode="widthFix" style="width:{{keep_info_item[0].image?'30%':'0px'}};height:{{keep_info_item[2].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[0].image}}'></image>
-          <image mode="widthFix" style="width:{{keep_info_item[1].image?'30%':'0px'}};height:{{keep_info_item[2].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[1].image}}'></image>
-          <image mode="widthFix" style="width:{{keep_info_item[2].image?'30%':'0px'}};height:{{keep_info_item[2].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[2].image}}'></image>
+          <image mode="widthFix" style="width:{{keep_info_item[0].image?'22%':'0px'}};height:{{keep_info_item[0].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[0].image}}'></image>
+          <image mode="widthFix" style="width:{{keep_info_item[1].image?'22%':'0px'}};height:{{keep_info_item[1].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[1].image}}'></image>
+          <image mode="widthFix" style="width:{{keep_info_item[2].image?'22%':'0px'}};height:{{keep_info_item[2].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[2].image}}'></image>
+          <image mode="widthFix" style="width:{{keep_info_item[3].image?'22%':'0px'}};height:{{keep_info_item[3].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[3].image}}'></image>
         </view>
     </view>
   </scroll-view>

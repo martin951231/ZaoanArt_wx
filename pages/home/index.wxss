@@ -4,16 +4,18 @@
   height:40px;
   margin-top: 40px;
   line-height: 40px;
-  color:#fff;
-  background-color:#000;
+  color:#000;
+  background-color:rgb(240,240,240);
+  border-radius: 0px;
 }
 .login_btn2{
  width:50%;
   height:40px;
   margin-top: 10px;
   line-height: 40px;
-  color:#fff;
-  background-color:#000;
+  color:#000;
+  background-color:rgb(240,240,240);
+  border-radius: 0px;
 }
 .login_none{
   text-align:center;
@@ -38,8 +40,8 @@
   height:30px;
   line-height: 30px;
   text-align: center;
-  color:#fff;
-  background-color: #000;
+  color:#000;
+  background-color:rgb(240,240,240);
 }
 .addkeep{
   bottom:40px;
@@ -53,4 +55,8 @@
   font-size:50px;
   line-height:50px;
   padding:0px;
+  z-index:9999;
+}
+button::after {
+  border: none;
 }

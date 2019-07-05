@@ -1,12 +1,14 @@
 <!--pages/index/details/decoration.wxml-->
 <view></view>
-<canvas style="width:{{canvas_width}}px;height:{{canvas_height}}px;position:absolute;margin-top:50px"  canvas-id='customCanvas'></canvas>
 <scroll-view scroll-y class="decoration_view">
-  <view style="margin-top:50px;background-color:#fff;">
-    <image class="decoration_image" mode="widthFix" src="{{default_img}}" bindtap="enlarge" data-src="{{default_img}}"></image>
+<!--  -->
+  <canvas style="width:{{canvas_width}}px;height:{{canvas_height}}px;margin-left:-{{canvas_width}}px;position:fixed;"  canvas-id='customCanvas'></canvas>
+  <view style="padding:50px 0px;background-color:#fff;text-align:center;">
+    <image style='z-index:999;' class="decoration_image" mode="widthFix" src="{{default_img}}" bindtap="enlarge" data-src="{{default_img}}"></image>
   </view>
   <view class="scroll_view">
   <scroll-view scroll-x class="decoration_scroll_x">
+    <view style="margin:5px 0px;">选择外框</view>
     <view data-series_id="{{item.id}}" bindtap="up_border" class="list_box" wx:for="{{border_series}}" wx-for-index="index" wx-for-item="item">
     <button style="background-color:{{border_status==item.id?'#000':'#fff'}};color:{{border_status==item.id?'#fff':'#000'}}">{{item.series_name}}</button>
     </view>
@@ -16,5 +18,10 @@
       <image style="width:80px" mode="widthFix" src="{{item.preview_img}}"></image>
     </view>
   </scroll-view>
+  </view>
+  <view style="padding:50px 0px;">
+    <text class="text_info">自由裁切、自定义尺寸及更多装裱形式</text>
+    <text class="text_info">请在PC端登陆早安艺术官方网站</text>
+    <text class="text_info">www.ZAOANART.com</text>
   </view>
 </scroll-view>
