@@ -73,7 +73,6 @@ Page({
     var obj = wx.createSelectorQuery();
     obj.select('.decoration_image').boundingClientRect();
     obj.exec(function (rect) {
-      console.log(rect[0])
       that.setData({
         width: rect[0].width,
         height: rect[0].height
@@ -106,113 +105,162 @@ Page({
         },
         success: function (res) {
           var array = wx.base64ToArrayBuffer(res.data.url)
+          var shuiyin_array = wx.base64ToArrayBuffer(res.data.shuiyin_url)
           var base64 = wx.arrayBufferToBase64(array)
-          wx.getImageInfo({
-            src: 'https://www.zaoanart.com/admin/test/bgimg.png',
-            success: function (res) {
+          var num = Math.floor(Math.random() * 999999)
+          //初始化写入文件方法(主图)
+          var fsm = wx.getFileSystemManager();
+          //声明主图的名字
+          const FILE_BASE_NAME = 'tmp_base64src'+num;
+          //声明主图的写入图片函数
+          var base64src = function (array) {
+            return new Promise((resolve, reject) => {
+              let filePath = `${wx.env.USER_DATA_PATH}/${FILE_BASE_NAME}.png`;
+              fsm.writeFile({
+                filePath,
+                data: array,
+                encoding: 'binary',
+                success() {
+                  resolve(filePath);
+                },
+                fail(msg) {
+                  console.log(msg)
+                },
+              });
+            });
+          };
+          //初始化写入文件方法(水印)
+          var fsm2 = wx.getFileSystemManager();
+          //声明水印图的名字
+          const FILE_BASE_NAME2 = 'tmp_base64src2';
+          //声明水印图的写入图片函数
+          var base64src2 = function (shuiyin_array) {
+            return new Promise((resolve, reject) => {
+              let filePath = `${wx.env.USER_DATA_PATH}/${FILE_BASE_NAME2}.png`;
+              fsm2.writeFile({
+                filePath,
+                data: shuiyin_array,
+                encoding: 'binary',
+                success() {
+                  resolve(filePath);
+                },
+                fail() {
+                  console.log('写入图片出错')
+                },
+              });
+            });
+          };
+          let qrcode = res.data.url;
+          base64src(array).then((filePath) => {
+            let qrcode1 = res.data.shuiyin_url;
+            base64src2(shuiyin_array).then((filePath2) => {
               wx.getImageInfo({
-                src: 'https://www.zaoanart.com/admin/test/logo.png',
+                src: filePath,
                 success: function (res) {
-                  // ctx.beginPath()//开始创建一个路径
-                  // ctx.fillRect(0, 0, 30, 12);
-                  // ctx.setShadow(0, 0, 0, '#ccc')
-                  ctx.drawImage(res.path, 5, 5, 60, 24)//绘制图片
-                  ctx.draw(true)
+                  wx.getImageInfo({
+                    src: filePath2,
+                    success: function (res) {
+                      // ctx.beginPath()//开始创建一个路径
+                      // ctx.fillRect(0, 0, 30, 12);
+                      // ctx.setShadow(0, 0, 0, '#ccc')
+                      ctx.drawImage(res.path, 5, 5, 60, 24)//绘制图片
+                      ctx.draw(true)
+                    }
+                  })
+                  ctx.beginPath()//开始创建一个路径
+                  ctx.fillStyle = "#FFFFFF";
+                  ctx.fillRect(0, 0, box_width + 40, box_height + 40);
+                  // ctx.setShadow(0, 10, 5, '#ccc')
+                  // //下边阴影
+                  let grd = ctx.createLinearGradient(40, box_height, 40, box_height + 10)
+                  grd.addColorStop(0, "#ababab");
+                  grd.addColorStop(0.8, "white");
+                  //下边
+                  ctx.beginPath();
+                  ctx.strokeStyle = "#fff";
+                  ctx.lineWidth = 0.1;
+                  ctx.setLineCap('round');
+                  ctx.setLineJoin('round');
+                  ctx.moveTo(40, box_height);
+                  ctx.lineTo(45, box_height + 10);
+                  ctx.lineTo(box_width + 2, box_height + 10);
+                  ctx.lineTo(box_width + 4, box_height + 8);
+                  ctx.lineTo(box_width, box_height);
+                  ctx.fillStyle = grd;
+                  ctx.fill();
+                  //先关闭绘制路径。
+                  ctx.closePath();
+                  //最后，按照绘制路径画出直线
+                  ctx.stroke();
+                  // //右边阴影
+                  let grd2 = ctx.createLinearGradient(box_width, 40, box_width + 5, 40)
+                  grd2.addColorStop(0.1, "#ababab");
+                  grd2.addColorStop(0.8, "white");
+                  //右边
+                  ctx.beginPath();
+                  ctx.strokeStyle = "#fff";
+                  ctx.lineWidth = 0.1;
+                  ctx.setLineCap('round');
+                  ctx.setLineJoin('round');
+                  ctx.moveTo(box_width, 40);
+                  ctx.lineTo(box_width, box_height + 1);
+                  ctx.lineTo(box_width + 3, box_height + 8);
+                  ctx.lineTo(box_width + 5, box_height + 6);
+                  ctx.lineTo(box_width + 5, 50);
+                  ctx.fillStyle = grd2;
+                  ctx.fill();
+                  //先关闭绘制路径。
+                  ctx.closePath();
+                  //最后，按照绘制路径画出直线
+                  ctx.stroke();
+                  // //直线(下)
+                  let grd3 = ctx.createLinearGradient(box_width - 3, box_height, box_width + 5, box_height + 9)
+                  grd3.addColorStop(0.1, "#ababab");
+                  grd3.addColorStop(0.8, "white");
+                  //直线
+                  ctx.beginPath();
+                  ctx.setLineCap('round');
+                  ctx.setLineJoin('round');
+                  ctx.strokeStyle = grd3;
+                  ctx.lineWidth = 2;
+                  ctx.moveTo(box_width, box_height);
+                  ctx.lineTo(box_width + 4, box_height + 9);
+                  ctx.fillStyle = grd3;
+                  ctx.fill();
+                  //先关闭绘制路径。
+                  ctx.closePath();
+                  //最后，按照绘制路径画出直线
+                  ctx.stroke();
+                  //绘制图片
+                  ctx.drawImage(res.path, 40, 40, box_width - 40, box_height - 40)
+                  ctx.draw(true, function () {
+                    setTimeout(function () {
+                      wx.canvasToTempFilePath({
+                        canvasId: 'customCanvas',
+                        success: function (res) {
+                          var tempFilePath = res.tempFilePath
+                          // var tempFilePath2 = wx.getFileSystemManager().readFileSync(tempFilePath, "base64")
+                          // console.log('data:image/png;base64,' + tempFilePath2)
+                          wx.hideLoading()
+                          that.setData({
+                            default_img: 'data:image/png;base64,' + base64,
+                            click_img: tempFilePath,
+                            canvas_display: 'none',
+                          });
+                        },
+                        fail: function (res) {
+                          console.log(res);
+                        }
+                      });
+                    }, 500);
+                  })
+                },
+                fail: function (msg) {
+                  console.log(msg)
                 }
               })
-              ctx.beginPath()//开始创建一个路径
-              ctx.fillStyle = "#FFFFFF";
-              ctx.fillRect(0, 0, box_width + 40, box_height + 40);
-              // ctx.setShadow(0, 10, 5, '#ccc')
-              // //下边阴影
-              let grd = ctx.createLinearGradient(40, box_height, 40, box_height + 10)
-              grd.addColorStop(0, "#ababab");
-              grd.addColorStop(0.8, "white");
-              //下边
-              ctx.beginPath();
-              ctx.strokeStyle = "#fff";
-              ctx.lineWidth = 0.1;
-              ctx.setLineCap('round');
-              ctx.setLineJoin('round');
-              ctx.moveTo(40, box_height);
-              ctx.lineTo(45, box_height + 10);
-              ctx.lineTo(box_width + 2, box_height + 10);
-              ctx.lineTo(box_width + 4, box_height + 8);
-              ctx.lineTo(box_width, box_height);
-              ctx.fillStyle = grd;
-              ctx.fill();
-              //先关闭绘制路径。
-              ctx.closePath();
-              //最后，按照绘制路径画出直线
-              ctx.stroke();
-              // //右边阴影
-              let grd2 = ctx.createLinearGradient(box_width, 40, box_width + 5, 40)
-              grd2.addColorStop(0.1, "#ababab");
-              grd2.addColorStop(0.8, "white");
-              //右边
-              ctx.beginPath();
-              ctx.strokeStyle = "#fff";
-              ctx.lineWidth = 0.1;
-              ctx.setLineCap('round');
-              ctx.setLineJoin('round');
-              ctx.moveTo(box_width, 40);
-              ctx.lineTo(box_width, box_height + 1);
-              ctx.lineTo(box_width + 3, box_height + 8);
-              ctx.lineTo(box_width + 5, box_height + 6);
-              ctx.lineTo(box_width + 5, 50);
-              ctx.fillStyle = grd2;
-              ctx.fill();
-              //先关闭绘制路径。
-              ctx.closePath();
-              //最后，按照绘制路径画出直线
-              ctx.stroke();
-              // //直线(下)
-              let grd3 = ctx.createLinearGradient(box_width - 3, box_height, box_width + 5, box_height + 9)
-              grd3.addColorStop(0.1, "#ababab");
-              grd3.addColorStop(0.8, "white");
-              //直线
-              ctx.beginPath();
-              ctx.setLineCap('round');
-              ctx.setLineJoin('round');
-              ctx.strokeStyle = grd3;
-              ctx.lineWidth = 2;
-              ctx.moveTo(box_width, box_height);
-              ctx.lineTo(box_width + 4, box_height + 9);
-              ctx.fillStyle = grd3;
-              ctx.fill();
-              //先关闭绘制路径。
-              ctx.closePath();
-              //最后，按照绘制路径画出直线
-              ctx.stroke();
-              //绘制图片
-              ctx.drawImage(res.path, 40, 40, box_width - 40, box_height - 40)
-              ctx.draw(true, function () {
-                setTimeout(function () {
-                  wx.canvasToTempFilePath({
-                    canvasId: 'customCanvas',
-                    success: function (res) {
-                      var tempFilePath = res.tempFilePath
-                      // var tempFilePath2 = wx.getFileSystemManager().readFileSync(tempFilePath, "base64")
-                      // console.log('data:image/png;base64,' + tempFilePath2)
-                      
-                      wx.hideLoading()
-                      that.setData({ 
-                        default_img: 'data:image/png;base64,' + base64, 
-                        click_img: tempFilePath,
-                        canvas_display: 'none',
-                      });
-                    },
-                    fail: function (res) {
-                      console.log(res);
-                    }
-                  });
-                }, 500);
-              })
-            },
-            fail: function (msg) {
-              console.log(msg)
-            }
-          })
+            });
+          });
         }
       })
     });

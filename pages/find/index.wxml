@@ -4,7 +4,7 @@
   <view style="display:inline-block">
     <input style="display:{{is_display?'none':'inline-block'}};width:150px;height:80px;" focus="{{inputShowed}}" bindblur="inputHide" name="searchInfo" bindinput ="searchInfoInput" bindconfirm='details_search2'  type="text" placeholder="" class="search_input"></input>
   </view>
-  <image bindtap="details_search" style="display:{{is_display?'inline-block':'none'}};width:80px;" src="../../image/search.png"  mode='widthFix'></image>
+  <image bindtap="details_search" style="display:{{is_display?'inline-block':'none'}};width:80px;height:auto" src="../../image/search.png"  mode='widthFix'></image>
 </view>
   <view class="cate_view">推荐收藏夹</view>
   <view class="keep_view" wx:for="{{keep_info}}" wx:for-index="index"  wx:for-item="keep_info_item" wx:key="item" data-keep_id="{{keep_info_item[0].keep_id}}" data-keep_name="{{keep_info_item[0].keep_name}}" bindtap="jump_keepimg">

@@ -12,10 +12,12 @@ Page({
     cate_img_right: [],
     page_status: true,
     cate_left: 0,
+    keepname2: '',
+    hiddenmodalput: true,
     cate_right: 0,
     keep_info:[],
     imgcount: 0,
-    hiddenmodalput: true,
+    hiddenmodalput2: true,
   },
   //跳转到详情页
   jump_details: function (option) {
@@ -30,8 +32,86 @@ Page({
       hiddenmodalput: true
     });
   },
+  //获取模态框输入信息
+  keepname2(e) {
+    this.setData({
+      keepname2: e.detail.value
+    })
+  },
+  //添加收藏夹
+  addkeep2() {
+    var token = getApp().globalData.token
+    if (token){
+      this.setData({
+        hiddenmodalput2: false,
+        hiddenmodalput: true
+      });
+    }else{
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none',
+        duration: 1000
+      });
+    }
+  },
+  //关闭模态框
+  cancelM2: function (e) {
+    this.setData({
+      hiddenmodalput2: true,
+    })
+  },
+  //模态框点确认
+  confirmM2: function (e) {
+    var token = getApp().globalData.token
+    if (!this.data.keepname2) {
+      wx.showToast({
+        title: '收藏夹名不能为空',
+        icon: 'none',
+        duration: 1000
+      });
+    } else {
+      this.setData({
+        hiddenmodalput2: true,
+      })
+      wx.showLoading({
+        title: '正在添加...',
+      });
+      var that = this
+      //获取我的收藏夹
+      wx.request({
+        url: getApp().globalData.api_url + '/addnewkeep',
+        data: { token: token, keep_name: that.data.keepname2 },
+        method: 'get',
+        header: {
+          'content-type': 'application/json'
+        },
+        success: function (res) {
+          wx.hideLoading()
+          if (res.data == 1) {
+            wx.showToast({
+              title: '收藏夹名已存在',
+              icon: 'none',
+              duration: 1000
+            });
+          } else if (res.data == 0) {
+            wx.showToast({
+              title: '添加成功',
+              icon: 'success',
+              duration: 1000
+            });
+            // that.getmykeep()
+          } else if (res.data == 2) {
+            wx.showToast({
+              title: '添加失败',
+              icon: 'none',
+              duration: 1000
+            });
+          }
+        }
+      })
+    }
+  },
   addkeep: function (event){
-    console.log(event)
     var that = this
     var uid = event.target.dataset.uid;
     var kid = event.target.dataset.kid;
@@ -92,18 +172,10 @@ Page({
           'content-type': 'application/json'
         },
         success: function (res) {
-          if(res.data == 1){
-            wx.showToast({
-              title: '请先到个人中心添加收藏夹',
-              icon: 'none',
-              duration: 2000
-            });
-          }else{
-            that.setData({
-              keep_info: res.data,
-              hiddenmodalput: !that.data.hiddenmodalput
-            });
-          }
+          that.setData({
+            keep_info: res.data,
+            hiddenmodalput: !that.data.hiddenmodalput
+          });
         }
       })
     }

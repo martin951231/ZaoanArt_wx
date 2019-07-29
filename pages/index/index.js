@@ -18,6 +18,26 @@ Page({
     })
   },
   onLoad: function () {
+    //记录小程序访问
+    wx.request({
+      url: getApp().globalData.api_url + '/record_access_wechat',
+      method: 'get',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+      }
+    })
+    wx.getStorage({
+      key: 'zanan_token',
+      success(res) {
+        getApp().globalData.token = res.data
+        console.log(res.data)
+      },
+      fail(msg){
+        getApp().globalData.token = null
+      }
+    })
     this.getcatelist();
     this.getthemelist();
     // if (app.globalData.userInfo) {

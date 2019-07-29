@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view style='width:100%;text-align:center;'>
   <!-- <image src='../../image/logo.png' style="width:50%" mode='widthFix'></image> -->
-  <image src='http://qiniu.zaoanart.com/zaoanart_logo_middle_1057px.gif' style="width:148px" mode='widthFix'></image>
+  <image src='http://qiniu.zaoanart.com/zaoanart_logo_middle_1057px.gif' style="width:150px;height:auto" mode='widthFix'></image>
 </view>
 <view>
    <view class="cate_view">分类 Category</view>
@@ -23,7 +23,7 @@
 </view>
 <view class="btm_about">
     <image src='../../image/zaoanart_logo_en_big.png' style='width:190px;margin-left:10px;height:50px'></image>
-    <view style="margin-left:20px;">
+    <view style="margin-left:15px;margin-right:15px;">
       <view>
         <text class="about_text" bindtap="user_guide">用户指南</text>
         <text class="about_text" bindtap="about_us">关于我们</text>
@@ -34,6 +34,6 @@
       </view>
     </view>
 </view>     
-<view style="color:#000;background-color:rgb(240,240,240);text-align:center;" bindtap="to_leave_message">给我们留言</view> 
+<!-- <view style="color:#000;background-color:rgb(240,240,240);text-align:center;" bindtap="to_leave_message">给我们留言</view>  -->
 
 

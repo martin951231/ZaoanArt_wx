@@ -2,20 +2,17 @@
 <!-- animation="{{animationData}}" -->
 <!-- width:{{progress_width}}% -->
 <view class='progress' style="width:{{progress_width}}%;height:{{progress_height}}px"></view>
-<view scroll-y class="condition" style="height:{{condition_height}}" data-data_id="condition">
-  <scroll-view scroll-y class='condition_info' style="height:{{condition_info_height}};overflow:hidden">
-    <view class="condition_infos">
-
+<view class="condition" style="height:{{condition_height}}" data-data_id="condition">
+  <scroll-view class='condition_info' style="height:{{condition_info_height}};overflow:hidden">
+    <view class="condition_infos" style="max-height:{{condition_infos_height}}px;overflow:scroll;display:{{display}}">
       <view class="condition_cate condition_">
         <view class="cate_text">
-          <image src="../../../image/search.png" style="width:20px;margin-right:5px" mode='widthFix'></image>
-          搜索
+          <image src="../../../image/search.png" style="width:20px;margin-right:5px;float:left;" mode='widthFix'></image>
+          <input style="" name="searchInfo" bindinput ="searchInfoInput" type="text" placeholder="请输入关键词" class="search_input"></input>
         </view>
-        <view>
-          <input style="width:150px;height:50px;" name="searchInfo" bindinput ="searchInfoInput" type="text" placeholder="请输入关键词" class="search_input"></input>
-        </view>
+      <view>
+    </view>
       </view>
-    
       <view class="condition_cate condition_">
         <view class="cate_text">
           <image src="../../../image/cate.png" style="width:20px;margin-right:5px" mode='widthFix'></image>
@@ -56,41 +53,62 @@
       <view bindtap='up_color_id' class="color_view" data-color_id="8" style="border:{{color_id==8?'3px solid #000':'3px solid #fff'}};background-color:rgb(255,150,255);"></view>
       <view bindtap='up_color_id' class="color_view" data-color_id="9" style="border:{{color_id==9?'3px solid #000':'3px solid rgb(240,240,240)'}};background-color:rgb(255,255,255);"></view>
       <view bindtap='up_color_id' class="color_view" data-color_id="10" style="border:{{color_id==10?'3px solid #000':'3px solid #fff'}};background-color:rgb(0,0,0);"></view>
+      <view bindtap='up_color_id' class="color_view" data-color_id="11" style="border:{{color_id==11?'3px solid #000':'3px solid #fff'}};background-color:rgb(120,120,120);"></view>
     </view>
       
     </view>
-    <view class="clearfix">
+    <view class="condition_color condition_">
+      <view class="cate_text2">
+        <image src="../../../image/composition.png" style="width:20px;margin-right:5px;" mode='widthFix'></image>
+        构图
+        <view style="display:flex;text-align:center;width:80%;justify-content:center;align-items:center;"> 
+          <view class="contrast_a" bindtap="up_contrast" data-contrast_id="1" style="border:{{contrast_id==1?'solid 2px #000':'solid 2px #ccc'}};margin-right:30px;display:inline-block;width:34px;height:14px;padding:2px">
+            <view style="background-color:{{contrast_id==1?'#000':'#ccc'}};width:34px;height:14px;"></view>
+          </view>
+          <view class="contrast_a" bindtap="up_contrast" data-contrast_id="2" style="border:{{contrast_id==2?'solid 2px #000':'solid 2px #ccc'}};margin-right:30px;display:inline-block;width:14px;height:34px;padding:2px">
+            <view style="background-color:{{contrast_id==2?'#000':'#ccc'}};width:14px;height:34px;"></view>
+          </view>
+          <view class="contrast_a" bindtap="up_contrast" data-contrast_id="3" style="border:{{contrast_id==3?'solid 2px #000':'solid 2px #ccc'}};margin-right:30px;display:inline-block;width:25px;height:25px;padding:2px">
+            <view style="background-color:{{contrast_id==3?'#000':'#ccc'}};width:25px;height:25px;"></view> 
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    </view>
+    <view class="clearfix" style="position:absolute;bottom:0px;width:98%;padding:1%;">
       <text bindtap='reset' class='condition_btn' style="float: left;">重置</text>
       <text bindtap='condition_search' class='condition_btn1' style="float: right;">筛选</text>
     </view>
-    </view>
-    <view class='condition_bottom' bindtap='up_condition'>
-      <image src="../../../image/{{condition_status}}.png" style='width:30px' mode="widthFix"></image>
+    <view class='condition_bottom' bindtap='up_condition' style="display:{{select?'flex':'none'}};">
+      <image src="../../../image/select.png" style='width:30px;margin-right:10px;' mode="widthFix"></image>
+      筛选
     </view>
   </scroll-view>
-  <view catchtap='hide_condition' style="height:{{hide_height}};width:100%;background-color:rgba(0,0,0,0.4)"></view>
+  <view catchtap='hide_condition' style="height:{{hide_height}};width:100%;background-color:rgba(0,0,0,0.4);z-index: 999;"></view>
 </view>
 <scroll-view  scroll-y data-cate_id="{{cate_img_left[0].cate_id}}" data-theme_id="{{theme_id}}" data-search_val="{{search_val}}" data-offset_start="{{imgcount}}" data-img_info_left="{{cate_img_left}}" data-img_info_right="{{cate_img_right}}" style="height:{{height}}px;" class="content_list" bindscrolltolower="loadimg">
- <view class="scroll_view" wx:if="{{cate_info}}">
-    <scroll-view class="cate_scroll_x" scroll-x>
-      <view class="list_box" data-cate_id="{{item.id}}" wx:for="{{cate_info}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}" bindtap="jump_list">
-                <image mode='widthFix' src="{{item.face_img}}" class="cate_img"></image>
-                <text class="cate_img_text">{{item.category_name}}</text>
+  <view style='margin-top:30px;'>
+    <view class="scroll_view" wx:if="{{cate_info}}">
+      <scroll-view class="cate_scroll_x" scroll-x>
+        <view class="list_box" data-cate_id="{{item.id}}" wx:for="{{cate_info}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}" bindtap="jump_list">
+                  <image mode='widthFix' src="{{item.face_img}}" class="cate_img"></image>
+                  <text class="cate_img_text">{{item.category_name}}</text>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="clearfix">
+      <view style="width:50%;float:left" id="cate_img_left">
+        <view class="list" bindtap="jump_details" wx:for="{{cate_img_left}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
+          <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
+        </view>
       </view>
-    </scroll-view>
-  </view>
-  <view class="clearfix">
-    <view style="width:50%;float:left" id="cate_img_left">
-      <view class="list" bindtap="jump_details" wx:for="{{cate_img_left}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
-        <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
+      <view style="width:50%;float:right" id="cate_img_right">
+        <view class="list" bindtap="jump_details" wx:for="{{cate_img_right}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
+          <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
+        </view>
       </view>
     </view>
-    <view style="width:50%;float:right" id="cate_img_right">
-      <view class="list" bindtap="jump_details" wx:for="{{cate_img_right}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
-        <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
-      </view>
-    </view>
   </view>
- 
 </scroll-view>
 

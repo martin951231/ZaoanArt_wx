@@ -4,13 +4,14 @@
     <!-- <scroll-view scroll-x class="details_name">{{img_info.name}}</scroll-view> -->
     <image mode="widthFix" class="details_image" src="{{img_info.image}}" bindtap="enlarge" data-src="{{img_info.image}}"></image>
   </view>
+  
   <view class="fixed_view" style="width:80%;">
      <view bindtap="to_decoration" style="width:80px;height:50px;float:right">
-      <image style="width:30px;height:30px;float:left;margin-top:5px;" src="../../../image/decoration.png"></image>
+      <image style="width:25px;float:left;margin-top:5px;" mode="widthFix" src="../../../image/decoration.png"></image>
       <view style="inline-block;">装裱</view>
     </view>
     <view bindtap="to_keep" style="width:80px;height:50px;float:right">
-      <image style="width:30px;height:30px;float:left;margin-top:5px;" src="../../../image/to_keep.png"></image>
+      <image style="width:30px;float:left;margin-top:5px;" mode="widthFix" src="../../../image/to_keep.png"></image>
       <view style="inline-block;">收藏</view>
     </view>
   </view>
@@ -29,8 +30,12 @@
         </view>
       </view>
   </view>
-  
+  <modal hidden="{{hiddenmodalput2}}" title="添加收藏夹" confirm-text="提交" cancel-text="取消" bindcancel="cancelM2" bindconfirm="confirmM2">
+      <input bindinput='keepname2' type='text' placeholder="请输入收藏夹名..." auto-focus/>
+   </modal>
+  <!-- <button bindtap="addkeep2" class="addkeep">＋</button> -->
 </scroll-view>
 <modal hidden="{{hiddenmodalput}}" bindtap="addkeep" title="请选择要添加的收藏夹" no-cancel="true" confirmText="取消" confirmColor="#ccc" bindconfirm="confirm">
   <view class="modal_view"  data-img_id="{{img_id}}" data-uid="{{item.uid}}" data-kid="{{item.id}}" wx:for="{{keep_info}}" wx-for-index="index" wx-for-item="item">{{item.keep_name}}</view>
+  <view class="modal_view2" bindtap="addkeep2">新建收藏夹</view>
 </modal>

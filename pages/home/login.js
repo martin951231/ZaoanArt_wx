@@ -5,6 +5,8 @@ Page({
     username:'',
     password:'',
     random:0,
+    timeout:'发送验证码',
+    disabled:false,
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
@@ -13,10 +15,29 @@ Page({
     wx.showToast({
       title: '正在发送...',
       icon: 'none',
-      duration: 1000
+      duration: 500
     });
     var username = this.data.username
     var that = this
+    var num = 60
+    that.setData({
+      timeout: num,
+      disabled: true
+    })
+    var countdown = setInterval(function () {
+      num--
+      if(num>0){
+        that.setData({
+          timeout: num,
+        })
+      }else{
+        that.setData({
+          timeout: '发送验证码',
+          disabled: false
+        })
+        clearInterval(countdown)
+      }
+    }, 1000)
     //查看手机号是否存在
     wx.request({
       url: 'https://api.zaoanart.com/v1/code/codetel',
@@ -96,6 +117,10 @@ Page({
                 duration: 500
               });
               getApp().globalData.token = res.data.token
+              wx.setStorage({
+                key: "zanan_token",
+                data: res.data.token
+              })
               //返回上一层
               wx.navigateBack({ delta: 1 })
             }

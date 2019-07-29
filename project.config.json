@@ -12,10 +12,17 @@
 		"nodeModules": false,
 		"autoAudits": false,
 		"uglifyFileName": true,
-		"checkInvalidKey": true
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.0.4",
+	"libVersion": "2.7.4",
 	"appid": "wxa0a3e0beee9f0e98",
 	"projectname": "%E6%97%A9%E5%AE%89%E8%89%BA%E6%9C%AF",
 	"debugOptions": {

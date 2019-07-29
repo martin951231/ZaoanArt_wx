@@ -55,6 +55,12 @@ Page({
   //注销
   logout(){
     getApp().globalData.token = ''
+    wx.removeStorage({
+      key: 'zanan_token',
+      success(res) {
+        console.log(res)
+      }
+    })
     wx.reLaunch({
       url: './index',
     })
@@ -63,6 +69,30 @@ Page({
   to_login(){
     wx.navigateTo({
       url: './login',
+    })
+  },
+  //弹出编辑名字modal框
+  edit_name(options){
+    var keep_id = options.currentTarget.dataset.keep_id
+    this.setData({
+      keep_id: keep_id
+    })
+    var that = this
+    wx.showActionSheet({
+      itemList: ['重命名', '删除'],
+      success(res) {
+        if (res.tapIndex == 0){
+          that.setData({
+            hiddenmodalput2: false,
+          })
+        } else if (res.tapIndex == 1) {
+          that.setData({
+            hiddenmodalput3: false,
+          })
+        }
+      },
+      fail(res) {
+      }
     })
   },
   //添加收藏夹
@@ -267,7 +297,7 @@ Page({
               'content-type': 'application/json' // 默认值
             },
             success: (res) => {
-              if(res.data == 1){
+              if (res.data == 1 || res.data ==3){
                 wx.showToast({
                   title: '登陆失败',
                   icon: 'none',
@@ -286,9 +316,12 @@ Page({
                   duration: 1000
                 });
                 getApp().globalData.token = res.data
+                wx.setStorage({
+                  key: "zanan_token",
+                  data: res.data
+                })
                 that.getmykeep()
               }
-              console.log(res)
             }, 
             fail: function (res) {
               console.log("解密失败~~~~~~~~~~~~~");
@@ -345,19 +378,21 @@ Page({
     })
   },
   //修改收藏夹名
-  edit_keepname(options){
-    var keep_id = options.currentTarget.dataset.keep_id
+  edit_keepname(){
+    // var keep_id = options.currentTarget.dataset.keep_id
+    // var keep_id = options
     this.setData({
       hiddenmodalput2: false,
-      keep_id: keep_id
+      // keep_id: keep_id
     })
   },
   //删除收藏夹
-  delete_keep(options){
-    var keep_id = options.currentTarget.dataset.keep_id
+  delete_keep(){
+    // var keep_id = options.currentTarget.dataset.keep_id
+    // var keep_id = options
     this.setData({
       hiddenmodalput3: false,
-      keep_id: keep_id
+      // keep_id: keep_id
     })
   },
 

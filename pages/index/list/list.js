@@ -25,7 +25,11 @@ Page({
     searchInfoInput:null,
     condition_height: '30px',
     condition_info_height: '30px',
+    condition_infos_height: 30,
+    display:'block',
+    select:true,
     hide_height:0,
+    contrast_id:null,
     condition_status:'condition_bottom',
     animation:{},
     hasUserInfo: false,
@@ -58,15 +62,32 @@ Page({
         condition_status: 'condition_top',
         condition_height: '100%',
         condition_info_height:'auto',
-        hide_height:'100%'
+        hide_height:'100%',
+        display:'block',
+        select:false
       });
     }else{
       this.setData({ 
         condition_status: 'condition_bottom',
         condition_height: '30px',
         condition_info_height: '30px',
-        hide_height: '0%'
+        hide_height: '0%',
+        display: 'none',
+        select: true
       });
+    }
+  },
+  //点击修改图片比例
+  up_contrast(e){
+    var contrast_id = e.currentTarget.dataset.contrast_id
+    if (this.data.contrast_id == contrast_id) {
+      this.setData({
+        contrast_id: null
+      })
+    } else {
+      this.setData({
+        contrast_id: contrast_id
+      })
     }
   },
   //点击修改搜索条件
@@ -123,16 +144,35 @@ Page({
     var theme_id = this.data.theme_id
     var color_id = this.data.color_id
     var search = this.data.searchInfoInput
-    var that = this
-    that.setData({
+    var contrast = this.data.contrast_id
+    this.setData({
       condition_status: 'condition_bottom',
       condition_height: '30px',
       condition_info_height: '30px',
       hide_height: '0%',
+      display: 'none',
+      select: true,
       cate_img_left: [],
       cate_img_right: [],
+      cate_left: 0,
+      cate_right: 0,
+      imgcount:0,
+      height:0,
       img_status:'all'
     });
+    var that = this
+    //后台查询子分类
+    wx.request({
+      url: getApp().globalData.api_url + '/getcate2',
+      data: { id: cate_id },
+      method: 'get',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        that.setData({ cate_info: res.data.data });
+      }
+    })
     //查询图片
     wx.request({
       url: getApp().globalData.api_url + '/getallimg',
@@ -141,6 +181,7 @@ Page({
         theme_id: theme_id,
         color_id: color_id,
         search: search,
+        contrast: contrast,
         start: 0,
       },
       method: 'get',
@@ -155,7 +196,6 @@ Page({
         var left_height = 0
         var right_height = 0
         if (res.data.data){
-          console.log(res.data)
           //设置后台查询开始的条目数
           that.setData({
             imgcount: res.data.data.start,
@@ -216,6 +256,9 @@ Page({
     var theme_id = options.theme_id
     var search_val = options.search
     var that = this
+    //获取屏幕高度
+    var window_height = wx.getSystemInfoSync().windowHeight
+    this.setData({ condition_infos_height: window_height*0.8 });
     //后台查询分类
     wx.request({
       url: getApp().globalData.api_url + '/getcate3',
@@ -352,7 +395,6 @@ Page({
         that.setData({ progress_width: 100, progress_height: 0});
         var left_height = 0
         var right_height = 0
-        console.log(res)
         if(res.data.data){
           //设置后台查询开始的条目数
           that.setData({
@@ -526,6 +568,14 @@ Page({
           that.setData({
             imgcount: res.data.start,
           });
+          if (offset_start != res.data.start) {
+            setTimeout(function () {
+              that.setData({
+                //设置是否加载完成
+                page_status: true
+              });
+            }, 1000)
+          }
           //循环往图片数组里追加图片
           for (var i in res.data.image) {
             //如果左边一列大就往右边一列放,反之往左边放
@@ -555,7 +605,7 @@ Page({
           cate_left: left_height,
           cate_right: right_height,
           //设置是否加载完成
-          page_status: true
+          // page_status: true
         });
       }
     })
@@ -585,6 +635,14 @@ Page({
           that.setData({
             imgcount: res.data.data.start,
           });
+          if (offset_start != res.data.data.start) {
+            setTimeout(function () {
+              that.setData({
+                //设置是否加载完成
+                page_status: true
+              });
+            }, 1000)
+          }
           //循环往图片数组里追加图片
           for (var i in res.data.data.image) {
             //如果左边一列大就往右边一列放,反之往左边放
@@ -609,12 +667,13 @@ Page({
             duration: 1000
           });
         }
+       
         //设置左右两列的高度
         that.setData({
           cate_left: left_height,
           cate_right: right_height,
-          //设置是否加载完成
-          page_status: true
+          // //设置是否加载完成
+          // page_status: true
         });
       }
     })
@@ -644,6 +703,14 @@ Page({
           that.setData({
             imgcount: res.data.data.start,
           });
+          if (offset_start != res.data.data.start) {
+            setTimeout(function () {
+              that.setData({
+                //设置是否加载完成
+                page_status: true
+              });
+            }, 1000)
+          }
           //循环往图片数组里追加图片
           for (var i in res.data.data.image) {
             //如果左边一列大就往右边一列放,反之往左边放
@@ -673,13 +740,15 @@ Page({
           cate_left: left_height,
           cate_right: right_height,
           //设置是否加载完成
-          page_status: true
+          // page_status: true
         });
       }
     })
   },
   //筛选搜索
   all_loadimg(cate_id, theme_id, color_id, offset_start) {
+    var search = this.data.searchInfoInput
+    var contrast = this.data.contrast_id
     var that = this
     //后台获取图片
     wx.request({
@@ -688,6 +757,8 @@ Page({
         cate_id: cate_id,
         theme_id: theme_id,
         color_id: color_id,
+        search: search,
+        contrast: contrast,
         start: offset_start
       },
       method: 'get',
@@ -703,6 +774,14 @@ Page({
           that.setData({
             imgcount: res.data.data.start,
           });
+          if (offset_start != res.data.data.start) {
+            setTimeout(function () {
+              that.setData({
+                //设置是否加载完成
+                page_status: true
+              });
+            }, 1000)
+          }
           //循环往图片数组里追加图片
           for (var i in res.data.data.image) {
             //如果左边一列大就往右边一列放,反之往左边放
@@ -732,7 +811,7 @@ Page({
           cate_left: left_height,
           cate_right: right_height,
           //设置是否加载完成
-          page_status: true
+          // page_status: true
         });
       }
     })
@@ -744,7 +823,9 @@ Page({
       condition_status: 'condition_bottom',
       condition_height: '30px',
       condition_info_height: '30px',
-      hide_height: '0%'
+      hide_height: '0%',
+      display: 'none',
+      select: true
     });
   },
   //设置定时
