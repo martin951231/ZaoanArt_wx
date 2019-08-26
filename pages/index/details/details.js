@@ -7,7 +7,8 @@ Page({
   data: {
     height: '',
     img_id:0,
-    img_info:[],
+    img_info: [],
+    img_label:[],
     cate_img_left: [],
     cate_img_right: [],
     page_status: true,
@@ -18,6 +19,24 @@ Page({
     keep_info:[],
     imgcount: 0,
     hiddenmodalput2: true,
+    longtap: 'none',
+    jump_details: 'jump_details',
+    touch_position_x: 0,
+    touch_position_y: 0,
+    touch_position_x1: 0,
+    touch_position_y1: 0,
+    touch_position_x2: 0,
+    touch_position_y2: 0,
+    touch_position_x3: 0,
+    touch_position_y3: 0,
+    opacity: 0,
+    is_to_keep: '',
+    to_keep_icon_hide: 'none',
+    touchlong: '',
+    keep_lately_info: [],
+    touchMove: '',
+    touchMove2: '',
+    touch_move: ''
   },
   //跳转到详情页
   jump_details: function (option) {
@@ -146,15 +165,23 @@ Page({
       })
     }
   },
+  //跳转到列表页
+  to_list(e){
+    var label_id = e.currentTarget.dataset.label_id
+    wx.navigateTo({
+      url: '../list/list?cate_id=0&theme_id=0&search=0&label_id='+label_id,
+    })
+  },
   //跳转到装裱页
   to_decoration(){
     var img_url = this.data.img_info.image
-    wx.redirectTo({
-      url: './decoration?img=' + img_url,
+    wx.navigateTo({
+      url: './decoration?img=' + img_url + '&img_id=' + this.data.img_id,
     })
   },
   //添加到收藏夹
-  to_keep(){
+  to_keep(e){
+    var img_id = e.currentTarget.dataset.img_id
     var that = this
     var token = getApp().globalData.token
     if (!token) {
@@ -163,6 +190,10 @@ Page({
         url: '../../home/index',
       })
     } else {
+      wx.navigateTo({
+        url: './to_keepimg?img_id=' + img_id + '&token=' + token + '&image=' + that.data.img_info.image + '&category=' + that.data.img_info.category + '&theme=' + that.data.img_info.theme,
+      })
+      return false
       //后台查询收藏夹
       wx.request({
         url: getApp().globalData.api_url + '/getukeep',
@@ -216,6 +247,18 @@ Page({
       },
       success: function (res) {
         that.setData({ img_info: res.data });
+      }
+    })
+    //获取图片标签
+    wx.request({
+      url: getApp().globalData.api_url + '/getimglabel',
+      data: { id: img_id },
+      method: 'get',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        that.setData({ img_label: res.data });
       }
     })
   },
@@ -335,6 +378,276 @@ Page({
         }
       })
     }
+  },
+  //长按事件
+  touchstart(e) {
+    var start_X = e.detail.x
+    var start_Y = e.detail.y
+    var img_id = e.currentTarget.id
+    var that = this
+    wx.getStorage({
+      key: 'lately_keep',
+      success: function (res) {
+        console.log(res.data)
+        that.setData({
+          keep_lately_info: res.data
+        })
+      },
+      fail: function (res) {
+        console.log(res)
+      }
+    });
+    this.setData({
+      longtap: 'block',
+      jump_details: '',
+      touch_position_x: start_X - 50,
+      touch_position_y: start_Y - 50,
+      touch_position_x1: start_X - 35,
+      touch_position_y1: start_Y - 60,
+      touch_position_x2: start_X - 35,
+      touch_position_y2: start_Y - 60,
+      touch_position_x3: start_X - 35,
+      touch_position_y3: start_Y - 60,
+      is_to_keep: img_id,
+      to_keep_icon_hide: 'flex',
+      touchlong: "100vh",
+      touchMove: 'touchMove',
+      touch_move: 'touch_move',
+    });
+  },
+  //手指移动
+  touchMove(e) {
+    var end_X = e.changedTouches[0].clientX
+    var end_Y = e.changedTouches[0].clientY
+    var start_X = this.data.touch_position_x
+    var start_Y = this.data.touch_position_y
+    var category = e.currentTarget.dataset.category
+    var theme = e.currentTarget.dataset.theme
+    var img_id = e.currentTarget.dataset.imgid
+    var image = e.currentTarget.dataset.image
+    if ((end_X - start_X > 5 && end_X - start_X < 100) && (end_Y - start_Y > 5 && end_Y - start_Y < 50)) {
+      var token = getApp().globalData.token
+      if (token) {
+        this.setData({
+          touch_position_x1: start_X - 105,
+          touch_position_y1: start_Y + 10,
+          touch_position_x2: start_X - 80,
+          touch_position_y2: start_Y - 65,
+          touch_position_x3: start_X - 5,
+          touch_position_y3: start_Y - 95,
+          opacity: 1,
+        });
+      }
+    }
+  },
+  //监听手指离开屏幕
+  touchEnd(e) {
+    var end_X = e.changedTouches[0].clientX
+    var end_Y = e.changedTouches[0].clientY
+    var start_X = this.data.touch_position_x
+    var start_Y = this.data.touch_position_y
+    var category = e.currentTarget.dataset.category
+    var theme = e.currentTarget.dataset.theme
+    var img_id = e.currentTarget.dataset.imgid
+    var image = e.currentTarget.dataset.image
+    var current_keeps = this.data.keep_lately_info
+    this.setData({
+      longtap: 'none',
+      jump_details: 'jump_details',
+      touchMove: '',
+      touch_move: '',
+      is_to_keep: 0,
+      to_keep_icon_hide: 'none',
+      opacity: 0,
+      touch_position_x1: start_X + 15,
+      touch_position_y1: start_Y - 30,
+      touch_position_x2: start_X + 15,
+      touch_position_y2: start_Y - 30,
+      touch_position_x3: start_X + 15,
+      touch_position_y3: start_Y - 30,
+    });
+    if ((end_X - start_X > 5 && end_X - start_X < 100) && (end_Y - start_Y > 5 && end_Y - start_Y < 50)) {
+      var token = getApp().globalData.token
+      if (!token) {
+        wx.showToast({
+          title: '请先登录',
+          icon: 'none',
+          duration: 1000
+        });
+      } else {
+        wx.navigateTo({
+          url: './to_keepimg?img_id=' + img_id + '&category=' + category + '&theme=' + theme + '&token=' + token + '&image=' + image,
+        })
+        return false
+      }
+    } else if ((end_X - start_X < -35 && end_X - start_X > -105) && (end_Y - start_Y > 10 && end_Y - start_Y < 80)) {
+      if (current_keeps && current_keeps.length >= 1) {
+        var current_keep = this.data.keep_lately_info[0]
+        this.add_keep(current_keep, img_id)
+      }
+    } else if ((end_X - start_X < -10 && end_X - start_X > -80) && (end_Y - start_Y < 5 && end_Y - start_Y > -65)) {
+      if (current_keeps && current_keeps.length >= 2) {
+        var current_keep = this.data.keep_lately_info[1]
+        this.add_keep(current_keep, img_id)
+      }
+    } else if ((end_X - start_X > -5 && end_X - start_X < 65) && (end_Y - start_Y < -25 && end_Y - start_Y > -95)) {
+      if (current_keeps && current_keeps.length >= 3) {
+        var current_keep = this.data.keep_lately_info[2]
+        this.add_keep(current_keep, img_id)
+      }
+    }
+  },
+  //长按事件
+  touchstart2(e) {
+    var start_X = e.detail.x
+    var start_Y = e.detail.y
+    var img_id = e.currentTarget.id
+    var that = this
+    wx.getStorage({
+      key: 'lately_keep',
+      success: function (res) {
+        console.log(res.data)
+        that.setData({
+          keep_lately_info: res.data
+        })
+      },
+      fail: function (res) {
+        console.log(res)
+      }
+    });
+    this.setData({
+      longtap: 'block',
+      jump_details: '',
+      touch_position_x: start_X - 50,
+      touch_position_y: start_Y - 50,
+      touch_position_x1: start_X - 35,
+      touch_position_y1: start_Y - 60,
+      touch_position_x2: start_X - 35,
+      touch_position_y2: start_Y - 60,
+      touch_position_x3: start_X - 35,
+      touch_position_y3: start_Y - 60,
+      touchMove: 'true',
+      touch_move: 'touch_move',
+      is_to_keep: img_id,
+      to_keep_icon_hide: 'flex',
+      touchlong: "100vh",
+      touchMove2: 'touchMove2',
+    });
+  },
+  //手指移动
+  touchMove2(e) {
+    var end_X = e.changedTouches[0].clientX
+    var end_Y = e.changedTouches[0].clientY
+    var start_X = this.data.touch_position_x
+    var start_Y = this.data.touch_position_y
+    var category = e.currentTarget.dataset.category
+    var theme = e.currentTarget.dataset.theme
+    var img_id = e.currentTarget.dataset.imgid
+    var image = e.currentTarget.dataset.image
+    if ((end_X - start_X > 5 && end_X - start_X < 100) && (end_Y - start_Y > 5 && end_Y - start_Y < 50)) {
+      var token = getApp().globalData.token
+      if (token) {
+        this.setData({
+          touch_position_x1: start_X + 135,
+          touch_position_y1: start_Y + 10,
+          touch_position_x2: start_X + 115,
+          touch_position_y2: start_Y - 65,
+          touch_position_x3: start_X + 40,
+          touch_position_y3: start_Y - 95,
+          opacity: 1,
+        });
+      }
+    }
+  },
+  //监听手指离开屏幕
+  touchEnd2(e) {
+    var end_X = e.changedTouches[0].clientX
+    var end_Y = e.changedTouches[0].clientY
+    var start_X = this.data.touch_position_x
+    var start_Y = this.data.touch_position_y
+    var category = e.currentTarget.dataset.category
+    var theme = e.currentTarget.dataset.theme
+    var img_id = e.currentTarget.dataset.imgid
+    var image = e.currentTarget.dataset.image
+    var current_keeps = this.data.keep_lately_info
+    this.setData({
+      longtap: 'none',
+      jump_details: 'jump_details',
+      touchMove: '',
+      touch_move: '',
+      is_to_keep: 0,
+      to_keep_icon_hide: 'none',
+      opacity: 0,
+      touch_position_x1: start_X + 15,
+      touch_position_y1: start_Y - 30,
+      touch_position_x2: start_X + 15,
+      touch_position_y2: start_Y - 30,
+      touch_position_x3: start_X + 15,
+      touch_position_y3: start_Y - 30,
+    });
+    if ((end_X - start_X > 5 && end_X - start_X < 100) && (end_Y - start_Y > 5 && end_Y - start_Y < 50)) {
+      var token = getApp().globalData.token
+      if (!token) {
+        wx.showToast({
+          title: '请先登录',
+          icon: 'none',
+          duration: 1000
+        });
+      } else {
+        wx.navigateTo({
+          url: './to_keepimg?img_id=' + img_id + '&category=' + category + '&theme=' + theme + '&token=' + token + '&image=' + image,
+        })
+        return false
+      }
+    } else if ((end_X - start_X > 135 && end_X - start_X < 205) && (end_Y - start_Y > 10 && end_Y - start_Y < 80)) {
+      if (current_keeps && current_keeps.length >= 1) {
+        var current_keep = this.data.keep_lately_info[0]
+        this.add_keep(current_keep, img_id)
+      }
+    } else if ((end_X - start_X > 115 && end_X - start_X < 185) && (end_Y - start_Y < 5 && end_Y - start_Y > -65)) {
+      if (current_keeps && current_keeps.length >= 2) {
+        var current_keep = this.data.keep_lately_info[1]
+        this.add_keep(current_keep, img_id)
+      }
+    } else if ((end_X - start_X > 40 && end_X - start_X < 110) && (end_Y - start_Y < -25 && end_Y - start_Y > -95)) {
+      if (current_keeps && current_keeps.length >= 3) {
+        var current_keep = this.data.keep_lately_info[2]
+        this.add_keep(current_keep, img_id)
+      }
+    }
+  },
+  //快捷添加到收藏夹
+  add_keep(current_keep, img_id) {
+    var uid = current_keep.uid
+    var keep_id = current_keep.id
+    var img_id = img_id
+    wx.showLoading({
+      title: '正在添加...',
+    });
+    wx.request({
+      url: getApp().globalData.api_url + '/addkeep',
+      data: { uid: uid, kid: keep_id, img_id: img_id },
+      method: 'get',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        wx.hideLoading()
+        if (res.data == 1) {
+          wx.showToast({
+            title: '该收藏夹已存在此图片',
+            icon: 'none',
+            duration: 1000
+          });
+        } else if (res.data == 0) {
+          wx.showToast({
+            title: '添加成功',
+            icon: 'success',
+            duration: 1000
+          });
+        }
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

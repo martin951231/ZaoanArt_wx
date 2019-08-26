@@ -1,0 +1,60 @@
+/* pages/find/keepimg/current_user.wxss */
+/* pages/find/index.wxss */
+.keep_view{
+  width:49vw;
+  display: inline-block;
+}
+.keep_img{
+  width: 22%;
+  margin: 1%;
+}
+.keep_name{
+  font-size: 20px;
+  font-weight: bold;
+  display: block;
+  padding: 5px 10px;
+}
+.cate_view{
+  margin: 10px 0px;
+  width: 100%;
+  height:30px;
+  line-height: 30px;
+  text-align: center;
+  color:#000;
+  background-color:rgb(240,240,240);
+}
+.btm_about{
+  width:100%;
+  height: 80px;
+  display: flex;
+  bottom:0px;
+  position:fixed;
+  background-color:#000;
+  align-items:center;
+}
+.about_text{
+  color:#b1b1b1;
+  font-size:15px;
+  margin:10px;
+}
+.gallery1{
+  width:49vw;
+  height:49vw;
+  padding: 5px 5px 5px 0px;
+  display:flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  overflow:hidden;
+}
+.gallery1::after{
+  content: "";
+  flex-grow: 2;
+  flex-shrink: 1;
+}
+/* 清楚浮动 */
+.clearfix:after { 
+  display:block; 
+  height : 0; 
+  clear : both; 
+  content : '' 
+}

@@ -16,13 +16,25 @@ Page({
     modalstatus:false,
     keepname: '',
     keepname2:'',
-    keep_id:null
+    keep_id:null,
+    username:'',
+    icon:'',
+    height:0,
+    keep_count:0,
+    img_ratio: 1,
+    my_attention:0,
+    attention_user_num:0,
+    uid:null,
+    input_margin:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      height: wx.getSystemInfoSync().windowWidth/6
+    })
     var that = this
     var token = getApp().globalData.token
     // if (!token) {
@@ -32,6 +44,9 @@ Page({
     //   })
     // }
     that.wx_login()
+  },
+  touch_move() {
+    return;
   },
   wx_login:function(){
     var that = this
@@ -65,34 +80,20 @@ Page({
       url: './index',
     })
   },
+  get_focus(){
+    this.setData({
+      input_margin: '-35vh'
+    });
+  },
+  lose_focus(){
+    this.setData({
+      input_margin: ''
+    });
+  },
   //跳转到登录页
   to_login(){
     wx.navigateTo({
       url: './login',
-    })
-  },
-  //弹出编辑名字modal框
-  edit_name(options){
-    var keep_id = options.currentTarget.dataset.keep_id
-    this.setData({
-      keep_id: keep_id
-    })
-    var that = this
-    wx.showActionSheet({
-      itemList: ['重命名', '删除'],
-      success(res) {
-        if (res.tapIndex == 0){
-          that.setData({
-            hiddenmodalput2: false,
-          })
-        } else if (res.tapIndex == 1) {
-          that.setData({
-            hiddenmodalput3: false,
-          })
-        }
-      },
-      fail(res) {
-      }
     })
   },
   //添加收藏夹
@@ -105,18 +106,6 @@ Page({
   cancelM: function (e) {
     this.setData({
       hiddenmodalput: true,
-    })
-  },
-  //关闭模态框
-  cancelM2: function (e) {
-    this.setData({
-      hiddenmodalput2: true,
-    })
-  },
-  //关闭模态框
-  cancelM3: function (e) {
-    this.setData({
-      hiddenmodalput3: true,
     })
   },
   //模态框点确认
@@ -321,6 +310,7 @@ Page({
                   data: res.data
                 })
                 that.getmykeep()
+                that.getusername()
               }
             }, 
             fail: function (res) {
@@ -335,6 +325,12 @@ Page({
       }
     });
   },
+  //跳转到编辑个人资料页面
+  edit_user(){
+    wx.navigateTo({
+      url: './edit_user',
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -347,6 +343,7 @@ Page({
    */
   onShow: function () {
     this.getmykeep()
+    this.getusername()
   },
   //获取我的收藏夹
   getmykeep(){
@@ -363,8 +360,34 @@ Page({
           'content-type': 'application/json'
         },
         success: function (res) {
+          console.log(res.data)
           wx.hideLoading()
           that.setData({ keep_info: res.data, token: token });
+        }
+      })
+    }
+  },
+  //获取用户名和头像
+  getusername(){
+    var token = getApp().globalData.token
+    var that = this
+    if (token) {
+      //获取用户名和头像
+      wx.request({
+        url: getApp().globalData.api_url + '/getusername',
+        data: { token: token },
+        method: 'get',
+        header: {
+          'content-type': 'application/json'
+        },
+        success: function (res) {
+          that.setData({
+            username: res.data.username,
+            icon: res.data.icon,
+            my_attention: res.data.my_attention,
+            attention_user_num: res.data.attention_user_num,
+            uid:res.data.uid
+          });
         }
       })
     }
@@ -373,29 +396,22 @@ Page({
   jump_keepimg(options) {
     var keep_id = options.currentTarget.dataset.keep_id
     var keep_name = options.currentTarget.dataset.keep_name
+    var username = options.currentTarget.dataset.username
     wx.navigateTo({
-      url: '../find/keepimg/keepimg?keep_id=' + keep_id + '&keep_name=' + keep_name +'&is_mykeep=2',
+      url: '../find/keepimg/keepimg?keep_id=' + keep_id + '&keep_name=' + keep_name + '&is_mykeep=2&username=' + username,
     })
   },
-  //修改收藏夹名
-  edit_keepname(){
-    // var keep_id = options.currentTarget.dataset.keep_id
-    // var keep_id = options
-    this.setData({
-      hiddenmodalput2: false,
-      // keep_id: keep_id
+  //跳转到我关注的收藏夹
+  my_attention(){
+    wx.navigateTo({
+      url: './my_attention?uid='+this.data.uid,
     })
   },
-  //删除收藏夹
-  delete_keep(){
-    // var keep_id = options.currentTarget.dataset.keep_id
-    // var keep_id = options
-    this.setData({
-      hiddenmodalput3: false,
-      // keep_id: keep_id
+  attention_user(){
+    wx.navigateTo({
+      url: './attention_user?uid='+this.data.uid,
     })
   },
-
   /**
    * 生命周期函数--监听页面隐藏
    */

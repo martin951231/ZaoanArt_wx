@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "add-tips": "/components/index"
+  },
   "navigationBarTitleText": "早安艺术"
 }

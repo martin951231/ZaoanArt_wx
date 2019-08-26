@@ -17,6 +17,7 @@ Page({
     canvas_height:0,
     canvas_display:'none',
     click_img:[],
+    img_id:null
   },
 
   /**
@@ -24,7 +25,8 @@ Page({
    */
   onLoad: function (options) {
     var img = options.img
-    this.setData({ default_img1: img, default_img: img, click_img: img});
+    var img_id = options.img_id
+    this.setData({ default_img1: img, default_img: img, click_img: img,img_id:img_id});
     var that = this
     //获取边框素材
     wx.request({

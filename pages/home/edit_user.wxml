@@ -1,0 +1,14 @@
+<!--pages/home/edit_user.wxml-->
+<view style="display: flex;justify-content: center;">
+  <view style="width: 100px;border-radius:50%;">
+    <image src="{{icon}}" mode="aspectFill" style="max-height:100px;max-width:100px;width:100px;height:100px;border-radius:50%" bindtap='changeAvatar'></image>
+    <text style="height:20px;">点击修改头像</text>
+  </view>
+</view>
+<view style="text-align:center;margin-top:20px;">
+  <view style="display:inline-block;display: flex;justify-content: center;">
+    <view style="display:inline-block;width:10vw;height:35px;line-height: 35px;margin-right: 10px;" bindtap="details_search2">昵称:</view>
+    <input style="text-align: left;display:inline-block;width:45vw;height:30px;border-bottom: 1px solid #ccc;" name="searchInfo" bindinput ="searchInfoInput" bindconfirm='edit_username'  type="text" placeholder="{{username}}" class="search_input"></input>
+  </view>
+</view>
+

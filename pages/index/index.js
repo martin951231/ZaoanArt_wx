@@ -96,13 +96,13 @@ Page({
   jump_details:function(option) {
     var id = option.currentTarget.id
     wx.navigateTo({
-      url: './list/list?cate_id=' + id +'&theme_id=0&search=0',
+      url: './list/list?cate_id=' + id +'&theme_id=0&search=0&label_id=0',
     })
   },
   jump_details2: function (option){
     var id = option.currentTarget.id
     wx.navigateTo({
-      url: './list/list?cate_id=0&theme_id=' + id +'&search=0',
+      url: './list/list?cate_id=0&theme_id=' + id +'&search=0&label_id=0',
     })
   },
   //跳转到用户指南页面

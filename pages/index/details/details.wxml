@@ -1,31 +1,70 @@
 <!--pages/index/details/details.wxml-->
-<scroll-view scroll-y class="details_view" data-img_id="{{img_id}}" data-offset_start="{{imgcount}}" bindscrolltolower="loadimg2" style="height:{{height}}px;margin-top:30px;">
+  <view style="display:{{longtap}};width:100vw;height:100%;position:absolute;z-index:9999;background-color:rgba(0,0,0,0.4);overflow:hidden" catchtouchmove="preventTouchMove"></view>
+    <view style="display:{{to_keep_icon_hide}};align-items: center;justify-content: center;background-color:#fff;border-radius:5px;width: 100px;height: 50px;position: absolute;z-index:999999;margin-left:{{touch_position_x}}px;margin-top:{{touch_position_y}}px">
+      <image id="to_keep_icon" src="../../../image/to_keep.png" style="width:30px;height:30px;margin-right: 7px;"></image>
+      <text style='font-size: 20px;'>收藏</text>
+    </view>
+      <!-- transition:1000ms ease 0ms;transform:translate({{touch_position_x1}}px,{{touch_position_y1}}px) rotate(-30deg) -->
+      <!-- margin-left:{{touch_position_x1}};margin-top:{{touch_position_y1}} -->
+      <view wx:if="{{keep_lately_info[0]}}" animation="{{ani1}}" style="display:flex;position: absolute;z-index:999999;opacity:{{opacity}};transition: all 0.2s linear;transform:{{transform1}};margin-left:{{touch_position_x1}}px;margin-top:{{touch_position_y1}}px" class="lately_keep2">
+        <view style="width:60px;height:60px;text-align:center;" data-uid="{{keep_lately_info[0].uid}}" data-keep_id="{{keep_lately_info[0].id}}" >
+          <image src="{{keep_lately_info[0].image}}" style="width:40px;height:40px;border-radius:50%;"></image>
+          <view style="font-size:13px;width: 60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{keep_lately_info[0].keep_name}}</view>
+        </view>
+      </view>
+      <!-- transition:1000ms ease 0ms;transform:translate({{touch_position_x2}}px,{{touch_position_y2}}px) -->
+      <!-- margin-left:{{touch_position_x2}};margin-top:{{touch_position_y2}} -->
+      <view wx:if="{{keep_lately_info[1]}}" animation="{{ani2}}" style="display:flex;position: absolute;z-index:999999;opacity:{{opacity}};transition: all 0.2s linear;transform:{{transform2}};margin-left:{{touch_position_x2}}px;margin-top:{{touch_position_y2}}px" class="lately_keep2">
+        <view style="width:60px;height:60px;text-align:center;" data-uid="{{keep_lately_info[1].uid}}" data-keep_id="{{keep_lately_info[1].id}}" >
+          <image src="{{keep_lately_info[1].image}}" style="width:40px;height:40px;border-radius:50%;"></image>
+          <view style="font-size:13px;width: 60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{keep_lately_info[1].keep_name}}</view>
+        </view>
+      </view>
+      <!-- transition:1000ms ease 0ms;transform:translate({{touch_position_x3}}px,{{touch_position_y3}}px) rotate(30deg) -->
+      <!-- margin-left:{{touch_position_x3}};margin-top:{{touch_position_y3}} -->
+      <view wx:if="{{keep_lately_info[2]}}" animation="{{ani3}}" style="display:flex;position: absolute;z-index:999999;opacity:{{opacity}};transition: all 0.2s linear;transform:{{transform3}};margin-left:{{touch_position_x3}}px;margin-top:{{touch_position_y3}}px" class="lately_keep2">
+        <view style="width:60px;height:60px;text-align:center;" data-uid="{{keep_lately_info[2].uid}}" data-keep_id="{{keep_lately_info[2].id}}" >
+          <image src="{{keep_lately_info[2].image}}" style="width:40px;height:40px;border-radius:50%;"></image>
+          <view style="font-size:13px;width: 60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{keep_lately_info[2].keep_name}}</view>
+        </view>
+      </view>
+
+<scroll-view catchtouchmove="{{touch_move}}" scroll-y class="details_view" data-img_id="{{img_id}}" data-offset_start="{{imgcount}}" bindscrolltolower="loadimg2" style="height:{{height}}px;">
   <view>
     <!-- <scroll-view scroll-x class="details_name">{{img_info.name}}</scroll-view> -->
     <image mode="widthFix" class="details_image" src="{{img_info.image}}" bindtap="enlarge" data-src="{{img_info.image}}"></image>
   </view>
   
   <view class="fixed_view" style="width:80%;">
-     <view bindtap="to_decoration" style="width:80px;height:50px;float:right">
+    <view class="img_info">
+      <view style="height: 20px;">IMAGE ID</view>
+      <view style="height: 20px;">{{img_id}}</view>
+    </view>
+     <view bindtap="to_decoration" style="width:80px;height:50px;float:right;line-height:50px;">
       <image style="width:25px;float:left;margin-top:5px;" mode="widthFix" src="../../../image/decoration.png"></image>
       <view style="inline-block;">装裱</view>
     </view>
-    <view bindtap="to_keep" style="width:80px;height:50px;float:right">
+    <view bindtap="to_keep" data-img_id="{{img_id}}" style="width:80px;height:50px;float:right;line-height:50px;">
       <image style="width:30px;float:left;margin-top:5px;" mode="widthFix" src="../../../image/to_keep.png"></image>
       <view style="inline-block;">收藏</view>
     </view>
   </view>
+
+  <scroll-view scroll-x style="width:100vw;height:40px;white-space: nowrap;margin: 0px 15px;text-align: left;">
+    <view bindtap="to_list" class="img_label" wx:for="{{img_label}}" wx-for-index="index" wx-for-item="item" data-label_id="{{item.id}}">{{item.label_name}}</view>
+  </scroll-view>
+
   <view style="margin:0px 15px;">
    <view class="cate_view">相似图片</view>
 </view>
-  <view class="like_image clearfix">
+  <view class="like_image clearfix" catchtouchmove="{{touch_move}}">
     <view style="width:50%;float:left" id="cate_img_left">
-        <view class="list" bindtap="jump_details" wx:for="{{cate_img_left}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
+        <view class="list {{is_to_keep==item.id?'click':'click_end'}}" bindlongpress="touchstart2" bindtouchend="touchEnd2" bindtouchmove="{{touchMove2}}" bindtap="jump_details" wx:for="{{cate_img_left}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}" data-image="{{item.image}}" data-imgid="{{item.id}}" data-category="{{item.category}}" data-theme="{{item.theme}}">
           <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
         </view>
       </view>
       <view style="width:50%;float:right" id="cate_img_right">
-        <view class="list" bindtap="jump_details" wx:for="{{cate_img_right}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
+        <view class="list {{is_to_keep==item.id?'click':'click_end'}}" bindlongpress="touchstart" bindtouchend="touchEnd" bindtouchmove="{{touchMove}}" bindtap="jump_details" wx:for="{{cate_img_right}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}" data-image="{{item.image}}" data-imgid="{{item.id}}" data-category="{{item.category}}" data-theme="{{item.theme}}">
           <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
         </view>
       </view>
@@ -36,6 +75,7 @@
   <!-- <button bindtap="addkeep2" class="addkeep">＋</button> -->
 </scroll-view>
 <modal hidden="{{hiddenmodalput}}" bindtap="addkeep" title="请选择要添加的收藏夹" no-cancel="true" confirmText="取消" confirmColor="#ccc" bindconfirm="confirm">
-  <view class="modal_view"  data-img_id="{{img_id}}" data-uid="{{item.uid}}" data-kid="{{item.id}}" wx:for="{{keep_info}}" wx-for-index="index" wx-for-item="item">{{item.keep_name}}</view>
+  <view class="modal_view" data-uid="{{item.uid}}" data-kid="{{item.id}}" wx:for="{{keep_info}}" wx-for-index="index" wx-for-item="item">{{item.keep_name}}</view>
   <view class="modal_view2" bindtap="addkeep2">新建收藏夹</view>
 </modal>
+

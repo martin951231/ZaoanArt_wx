@@ -1,38 +1,96 @@
+<view>
 <!--pages/home/index.wxml-->
+<!-- 添加收藏夹模态框 -->
+  <view catchtouchmove="touch_move" style="z-index: 9999999;width: 100vw;height: 100vh;justify-content: center;align-items: center;background-color: rgba(0,0,0,0.4);position: absolute;display:{{hiddenmodalput?'none':'flex'}}">
+    <view style="margin-top:{{input_margin}};width: 75vw;height:35vw;background-color:#fff;border-radius:3px;position: relative;text-align: center;overflow: hidden;">
+      <view style="width:100%;font-size: 16px;font-weight: bold;width: 100%;font-size: 16px;font-weight: bold;margin: 10px 0px;">添加收藏夹</view>
+      <view style="text-align: left;margin-left: 20px;">
+        <input bindinput='keepname' bindfocus="get_focus" bindblur="lose_focus" type='text' placeholder="请输入收藏夹名..." auto-focus/>
+      </view>
+      <view style="display:inline-block;width: 100%;position: absolute;bottom: 0px;left: 0px;border-top: 1px solid #ccc;">
+        <view bindtap="cancelM" style="display: inline-block;width: 50%;height: 40px;line-height: 40px;">取消</view>
+        <view bindtap="confirmM" style="background-color:#000;color:#fff;width:50%;margin-right: -1%;display: inline-block;width: 50%;height: 40px;line-height: 40px;">提交</view>
+      </view>
+    </view>
+  </view>
+<!-- 添加收藏夹模态框结束 -->
 <view class="login_none" style="width:100%;text-align:center;margin-top:50px;" wx:if="{{!token}}">
   <view>没有登录</view>
   <button bindtap="to_login" class="login_btn">手机号登录</button>
   <button open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber" class="login_btn2">微信登录</button>
 </view>
-<view wx:else>
-<view bindtap="logout">注销</view>
-    <modal hidden="{{hiddenmodalput}}" title="添加收藏夹" confirm-text="提交" cancel-text="取消" bindcancel="cancelM" bindconfirm="confirmM">
+<view wx:else style='margin-left:5px'>
+<view style="height: 120px;margin-top: 20px;">
+  <view class="clearfix">
+    <view style="font-size: 30px;font-weight: bold;">
+      <view style="width:60vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{username}}</view>
+    </view>  
+    <view bindtap="logout" style='float: left;font-size:15px;display: flex;align-items: center;justify-items: center;margin-right:10px;'>
+      <image src="../../image/logout.png" style="width:20px;height:20px;margin-right:5px;"></image>
+      注销
+    </view>
+    <view bindtap="edit_user" style='float: left;font-size:15px;display: flex;align-items: center;justify-items: center;'>
+      <image src="../../image/set_user.png" style="width:20px;height:20px;margin-right:5px;"></image>
+      编辑资料
+    </view>
+  </view>
+  <button class='button' open-type="contact">
+    <image src="../../image/kefu.png" style="width:20px;height:20px;margin-right:5px;"></image>
+    <!-- <button open-type="contact">联系客服</button> -->
+    联系客服
+  </button>
+  <view style="position: absolute;right: 20px;top: 20px;border-radius:50%;overflow:hidden">
+    <!-- <open-data type="userAvatarUrl" style="width:100px;height:100px;border-radius:50%"></open-data> -->
+    <image src="{{icon}}" mode="aspectFill" style="max-width:100px;max-height:100px;width:100px;height:100px;border-radius:50%"></image>
+  </view>
+</view>
+  <view style="display:block">
+    <view bindtap="my_attention" style="display: inline-block;">
+      <view style="font-size: 25px;font-weight: bold;width:100px">{{my_attention}}</view>  
+      <view style="width:100px;font-size:13px;">关注收藏夹</view>
+    </view>
+    <view bindtap="attention_user" style="display: inline-block;">
+      <view style="font-size: 25px;font-weight: bold;width:100px">{{attention_user_num}}</view>  
+      <view style="width:100px;font-size:13px;">关注</view>
+    </view>
+  </view>
+    <!-- <modal hidden="{{hiddenmodalput}}" title="添加收藏夹" confirm-text="提交" cancel-text="取消" bindcancel="cancelM" bindconfirm="confirmM">
       <input bindinput='keepname' type='text' placeholder="请输入收藏夹名..." auto-focus/>
-    </modal>
-    <modal hidden="{{hiddenmodalput2}}" title="修改收藏夹名" confirm-text="提交" cancel-text="取消" bindcancel="cancelM2" bindconfirm="confirmM2">
-      <input bindinput='keepname2' type='text' placeholder="请输入收藏夹名..." auto-focus/>
-    </modal>
-    <modal hidden="{{hiddenmodalput3}}" title="删除收藏夹" confirm-text="删除" cancel-text="取消" bindcancel="cancelM3" bindconfirm="confirmM3">
-      <text>删除收藏夹将会删除收藏夹里所有图片,您确定要删除吗?</text>
-    </modal>
+    </modal> -->
   <button bindtap="addkeep" class="addkeep">＋</button>
   <scroll-view scroll-y>
-    <view class="cate_view">我的收藏夹</view>
-    <view class="keep_view" wx:for="{{keep_info}}" wx:for-index="index"  wx:for-item="keep_info_item" wx:key="item"  >
-        <view class="keep_name">
-          <text bindtap="edit_name" data-keep_id="{{keep_info_item[0].keep_id}}">{{keep_info_item[0].keep_name}}</text>
-          <!-- <view style="display:inline-block;float:right;margin-right:20px;">
-            <image bindtap="edit_keepname" data-keep_id="{{keep_info_item[0].keep_id}}" data-keep_name="{{keep_info_item[0].keep_name}}" mode="widthFix" src='../../image/edit.png' style="width:30px;"></image>
-            <image bindtap="delete_keep" data-keep_id="{{keep_info_item[0].keep_id}}" data-keep_name="{{keep_info_item[0].keep_name}}" mode="widthFix" src='../../image/delete.png' style="width:30px;"></image>
-          </view> -->
+    <view class="cate_view">我的收藏夹
+      <text style='color:#a7a7a7;font-size:13px'>({{keep_info.length}}个)</text>
+    </view>
+    <view style="" class="keep_view" wx:for="{{keep_info}}" wx:for-index="index"  wx:for-item="keep_info_item" wx:key="item"  >
+        <view class='gallery1' bindtap="jump_keepimg" data-keep_id="{{keep_info_item[0].keep_id}}" data-username="{{username}}" data-keep_name="{{keep_info_item[0].keep_name}}">
+        <!-- style="width:{{keep_info_item[0].image?'22%':'0px'}};height:{{keep_info_item[0].image?'':'0px'}}"
+        style="width:{{keep_info_item[1].image?'22%':'0px'}};height:{{keep_info_item[1].image?'':'0px'}}"
+        style="width:{{keep_info_item[2].image?'22%':'0px'}};height:{{keep_info_item[2].image?'':'0px'}}"
+        style="width:{{keep_info_item[3].image?'22%':'0px'}};height:{{keep_info_item[3].image?'':'0px'}}" -->
+          <view wx:if="{{keep_info_item[0].img_ratio == 1}}">
+            <image mode="aspectFill"  style="margin: 2px;width:48vw;height:33vw" src='{{keep_info_item[0].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:15vw;height:15vw" src='{{keep_info_item[1].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:15vw;height:15vw" src='{{keep_info_item[2].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:15vw;height:15vw" src='{{keep_info_item[3].image}}'></image>
+          </view>
+          <view wx:if="{{keep_info_item[0].img_ratio == 2}}">
+            <image mode="aspectFill"  style="margin: 2px;width:23vw;height:24vw" src='{{keep_info_item[0].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:23vw;height:24vw" src='{{keep_info_item[1].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:23vw;height:24vw" src='{{keep_info_item[2].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:23vw;height:24vw" src='{{keep_info_item[3].image}}'></image>
+          </view>
+          <view wx:if="{{keep_info_item[0].img_ratio == 3}}">
+            <image mode="aspectFill"  style="margin: 2px;width:30vw;height:24vw" src='{{keep_info_item[0].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:16vw;height:24vw" src='{{keep_info_item[1].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:16vw;height:24vw" src='{{keep_info_item[2].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:30vw;height:24vw" src='{{keep_info_item[3].image}}'></image>
+          </view>
         </view>
-        <view style="margin-top:15px;min-height:100px;" bindtap="jump_keepimg" data-keep_id="{{keep_info_item[0].keep_id}}" data-keep_name="{{keep_info_item[0].keep_name}}">
-          <image mode="widthFix" style="width:{{keep_info_item[0].image?'22%':'0px'}};height:{{keep_info_item[0].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[0].image}}'></image>
-          <image mode="widthFix" style="width:{{keep_info_item[1].image?'22%':'0px'}};height:{{keep_info_item[1].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[1].image}}'></image>
-          <image mode="widthFix" style="width:{{keep_info_item[2].image?'22%':'0px'}};height:{{keep_info_item[2].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[2].image}}'></image>
-          <image mode="widthFix" style="width:{{keep_info_item[3].image?'22%':'0px'}};height:{{keep_info_item[3].image?'':'0px'}}" class="keep_img" src='{{keep_info_item[3].image}}'></image>
-        </view>
+            <view style="font-weight: bold;margin: 5px 0px;" data-keep_id="{{keep_info_item[0].keep_id}}">{{keep_info_item[0].keep_name}}</view>
+            <view style="display:inline-block;color:#a7a7a7;font-size: 12px;float:left;">{{keep_info_item[0].attention_num}} 个关注</view>
+            <view style="display:inline-block;;color:#a7a7a7;font-size: 12px;float:right;margin-right:20px">热度 {{keep_info_item[0].heat}}</view>
     </view>
   </scroll-view>
 </view>
-
+</view>

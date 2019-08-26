@@ -11,6 +11,7 @@ Page({
     hasUserInfo: false,
     inputShowed:false,
     searchInfo: '',
+    img_ratio: 1,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
 
@@ -24,8 +25,9 @@ Page({
   jump_keepimg(options){
     var keep_id = options.currentTarget.dataset.keep_id
     var keep_name = options.currentTarget.dataset.keep_name
+    var uid = options.currentTarget.dataset.uid
     wx.navigateTo({
-      url: './keepimg/keepimg?keep_id=' + keep_id + '&keep_name=' + keep_name + '&is_mykeep=1',
+      url: './keepimg/keepimg?keep_id=' + keep_id + '&keep_name=' + keep_name + '&is_mykeep=1'+'&uid='+uid,
     })
   },
   // //跳转到选图方式页面
@@ -89,16 +91,115 @@ Page({
     })
     var _search = this.data.searchInfo
     wx.navigateTo({
-      url: '../index/list/list?cate_id=0&theme_id=0&search=' + _search,
+      url: '../index/list/list?cate_id=0&theme_id=0&label_id=0&search=' + _search,
     })
+  },
+  //添加关注
+  add_attention(e){
+    var keep_id = e.currentTarget.dataset.keep_id
+    var token = getApp().globalData.token
+    var that = this
+    if(!token){
+      wx.switchTab({
+        url: '../home/index',
+      })
+    }else{
+      wx.showLoading({
+        title: '正在添加...',
+      });
+      //添加关注
+      wx.request({
+        url: getApp().globalData.api_url + '/add_attention',
+        data:{
+          token : token,
+          keep_id : keep_id
+        },
+        method: 'get',
+        header: {
+          'content-type': 'application/json'
+        },
+        success: function (res) {
+          wx.hideLoading()
+          if (res.data == 1) {
+            wx.showToast({
+              title: '添加成功',
+              icon: 'success',
+              duration: 1000
+            });
+            that.getkeep()
+          } else if (res.data == 2) {
+            wx.showToast({
+              title: '添加失败',
+              icon: 'none',
+              duration: 1000
+            });
+          }
+        }
+      })
+    }
+  },
+  //取消关注
+  del_attention(e) {
+    var keep_id = e.currentTarget.dataset.keep_id
+    var token = getApp().globalData.token
+    var that = this
+    if (!token) {
+      wx.switchTab({
+        url: '../home/index',
+      })
+    } else {
+      wx.showLoading({
+        title: '正在取消...',
+      });
+      //添加关注
+      wx.request({
+        url: getApp().globalData.api_url + '/del_attention',
+        data: {
+          token: token,
+          keep_id: keep_id
+        },
+        method: 'get',
+        header: {
+          'content-type': 'application/json'
+        },
+        success: function (res) {
+          wx.hideLoading()
+          if (res.data == 1) {
+            wx.showToast({
+              title: '取消成功',
+              icon: 'success',
+              duration: 1000
+            });
+            that.getkeep()
+          } else if (res.data == 2) {
+            wx.showToast({
+              title: '取消失败',
+              icon: 'none',
+              duration: 1000
+            });
+          }
+        }
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.getkeep()
+  },
+  getkeep(){
+    if (getApp().globalData.token) {
+      var token = getApp().globalData.token
+    } else {
+      var token = null
+    }
     var that = this
     wx.request({
       url: getApp().globalData.api_url + '/getkeep',
+      data: {
+        token: token
+      },
       method: 'get',
       header: {
         'content-type': 'application/json'
@@ -108,7 +209,6 @@ Page({
       }
     })
   },
-
   /**
    * 生命周期函数--监听页面隐藏
    */

@@ -35,3 +35,28 @@
 .text_info{
   display:block;
 }
+.img_info{
+  display: block;
+  color: rgb(240,240,240);
+  font-size: 15px;
+  text-align: left;
+  height: 50px;
+  padding-left: 20px;
+}
+.button{
+  width: 100%;
+  font-size:15px;
+  margin:5px 0px;
+  padding:0;
+  color:#000;
+  background-color:#ffffff;
+  line-height:inherit;
+  border-radius:0;
+  border:none;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+button::after {
+ border: none
+}

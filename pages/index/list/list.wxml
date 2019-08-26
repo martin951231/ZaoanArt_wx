@@ -1,114 +1,147 @@
-<!--pages/home/list.wxml-->
-<!-- animation="{{animationData}}" -->
-<!-- width:{{progress_width}}% -->
-<view class='progress' style="width:{{progress_width}}%;height:{{progress_height}}px"></view>
-<view class="condition" style="height:{{condition_height}}" data-data_id="condition">
-  <scroll-view class='condition_info' style="height:{{condition_info_height}};overflow:hidden">
-    <view class="condition_infos" style="max-height:{{condition_infos_height}}px;overflow:scroll;display:{{display}}">
-      <view class="condition_cate condition_">
-        <view class="cate_text">
-          <image src="../../../image/search.png" style="width:20px;margin-right:5px;float:left;" mode='widthFix'></image>
-          <input style="" name="searchInfo" bindinput ="searchInfoInput" type="text" placeholder="请输入关键词" class="search_input"></input>
-        </view>
-      <view>
+<add-tips />
+<scroll-view scroll-y>
+  <!--pages/home/list.wxml-->
+  <!-- animation="{{animationData}}" -->
+  <!-- width:{{progress_width}}% -->
+  <view style="display:{{longtap}};width:100vw;height:100%;position:absolute;z-index:9999;background-color:rgba(0,0,0,0.4);overflow:hidden" catchtouchmove="preventTouchMove"></view>
+    <view style="display:{{to_keep_icon_hide}};align-items: center;justify-content: center;background-color:#fff;border-radius:5px;width: 100px;height: 50px;position: absolute;z-index:999999;margin-left:{{touch_position_x}}px;margin-top:{{touch_position_y}}px">
+      <image id="to_keep_icon" src="../../../image/to_keep.png" style="width:30px;height:30px;margin-right: 7px;"></image>
+      <text style='font-size: 20px;'>收藏</text>
     </view>
-      </view>
-      <view class="condition_cate condition_">
-        <view class="cate_text">
-          <image src="../../../image/cate.png" style="width:20px;margin-right:5px" mode='widthFix'></image>
-          类别
-        </view>
-        <view>
-          <view bindtap='up_cate_id' style="color:{{cate_id==item.id?'#fff':'#000'}};background-color:{{cate_id==item.id?'#000':'rgb(240,240,240)'}};font-weight:{{cate_id==item.id?'bold':'100'}}" data-cate_id="{{item.id}}" class="condition_text" wx:for="{{cate_name}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
-          {{item.category_name}}
-          </view>
+      <!-- transition:1000ms ease 0ms;transform:translate({{touch_position_x1}}px,{{touch_position_y1}}px) rotate(-30deg) -->
+      <!-- margin-left:{{touch_position_x1}};margin-top:{{touch_position_y1}} -->
+      <view wx:if="{{keep_lately_info[0]}}" animation="{{ani1}}" style="display:flex;position: absolute;z-index:999999;opacity:{{opacity}};transition: all 0.2s linear;transform:{{transform1}};margin-left:{{touch_position_x1}}px;margin-top:{{touch_position_y1}}px" class="lately_keep2">
+        <view style="width:60px;height:60px;text-align:center;" data-uid="{{keep_lately_info[0].uid}}" data-keep_id="{{keep_lately_info[0].id}}" >
+          <image src="{{keep_lately_info[0].image}}" style="width:40px;height:40px;border-radius:50%;"></image>
+          <view style="font-size:13px;width: 60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{keep_lately_info[0].keep_name}}</view>
         </view>
       </view>
-    <view class="condition_theme condition_">
-    <view class="cate_text">
-      <image src="../../../image/theme.png" style="width:20px;margin-right:5px" mode='widthFix'></image>
-      主题
-      <!-- <text style="display:inline-block;">主题</text> -->
-    </view>
-    <view>
-      <view bindtap='up_theme_id' style="color:{{theme_id==item.id?'#fff':'#000'}};background-color:{{theme_id==item.id?'#000':'rgb(240,240,240)'}};font-weight:{{theme_id==item.id?'bold':'100'}}" data-theme_id="{{item.id}}" class="condition_text" wx:for="{{theme_name}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
-        {{item.theme_name}}
+      <!-- transition:1000ms ease 0ms;transform:translate({{touch_position_x2}}px,{{touch_position_y2}}px) -->
+      <!-- margin-left:{{touch_position_x2}};margin-top:{{touch_position_y2}} -->
+      <view wx:if="{{keep_lately_info[1]}}" animation="{{ani2}}" style="display:flex;position: absolute;z-index:999999;opacity:{{opacity}};transition: all 0.2s linear;transform:{{transform2}};margin-left:{{touch_position_x2}}px;margin-top:{{touch_position_y2}}px" class="lately_keep2">
+        <view style="width:60px;height:60px;text-align:center;" data-uid="{{keep_lately_info[1].uid}}" data-keep_id="{{keep_lately_info[1].id}}" >
+          <image src="{{keep_lately_info[1].image}}" style="width:40px;height:40px;border-radius:50%;"></image>
+          <view style="font-size:13px;width: 60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{keep_lately_info[1].keep_name}}</view>
+        </view>
       </view>
-    </view>
-    </view>
-    <view class="condition_color condition_">
-    <view class="cate_text">
-      <image src="../../../image/color.png" style="width:20px;margin-right:5px" mode='widthFix'></image>
-      颜色
-      <!-- <text style="display:inline-block;">颜色</text> -->
-    </view>
-    <view>
-      <view bindtap='up_color_id' class="color_view" data-color_id="1" style="border:{{color_id==1?'3px solid #000':'3px solid #fff'}};background-color:rgb(255,0,0);"></view>
-      <view bindtap='up_color_id' class="color_view" data-color_id="2" style="border:{{color_id==2?'3px solid #000':'3px solid #fff'}};background-color:rgb(255,150,0);"></view>
-      <view bindtap='up_color_id' class="color_view" data-color_id="3" style="border:{{color_id==3?'3px solid #000':'3px solid #fff'}};background-color:rgb(255,255,0);"></view>
-      <view bindtap='up_color_id' class="color_view" data-color_id="4" style="border:{{color_id==4?'3px solid #000':'3px solid #fff'}};background-color:rgb(0,255,0);"></view>
-      <view bindtap='up_color_id' class="color_view" data-color_id="5" style="border:{{color_id==5?'3px solid #000':'3px solid #fff'}};background-color:rgb(0,255,255);"></view>
-      <view bindtap='up_color_id' class="color_view" data-color_id="6" style="border:{{color_id==6?'3px solid #000':'3px solid #fff'}};background-color:rgb(0,0,255);"></view>
-      <view bindtap='up_color_id' class="color_view" data-color_id="7" style="border:{{color_id==7?'3px solid #000':'3px solid #fff'}};background-color:rgb(100,50,150);"></view>
-      <view bindtap='up_color_id' class="color_view" data-color_id="8" style="border:{{color_id==8?'3px solid #000':'3px solid #fff'}};background-color:rgb(255,150,255);"></view>
-      <view bindtap='up_color_id' class="color_view" data-color_id="9" style="border:{{color_id==9?'3px solid #000':'3px solid rgb(240,240,240)'}};background-color:rgb(255,255,255);"></view>
-      <view bindtap='up_color_id' class="color_view" data-color_id="10" style="border:{{color_id==10?'3px solid #000':'3px solid #fff'}};background-color:rgb(0,0,0);"></view>
-      <view bindtap='up_color_id' class="color_view" data-color_id="11" style="border:{{color_id==11?'3px solid #000':'3px solid #fff'}};background-color:rgb(120,120,120);"></view>
-    </view>
+      <!-- transition:1000ms ease 0ms;transform:translate({{touch_position_x3}}px,{{touch_position_y3}}px) rotate(30deg) -->
+      <!-- margin-left:{{touch_position_x3}};margin-top:{{touch_position_y3}} -->
+      <view wx:if="{{keep_lately_info[2]}}" animation="{{ani3}}" style="display:flex;position: absolute;z-index:999999;opacity:{{opacity}};transition: all 0.2s linear;transform:{{transform3}};margin-left:{{touch_position_x3}}px;margin-top:{{touch_position_y3}}px" class="lately_keep2">
+        <view style="width:60px;height:60px;text-align:center;" data-uid="{{keep_lately_info[2].uid}}" data-keep_id="{{keep_lately_info[2].id}}" >
+          <image src="{{keep_lately_info[2].image}}" style="width:40px;height:40px;border-radius:50%;"></image>
+          <view style="font-size:13px;width: 60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{keep_lately_info[2].keep_name}}</view>
+        </view>
+      </view>
       
-    </view>
-    <view class="condition_color condition_">
-      <view class="cate_text2">
-        <image src="../../../image/composition.png" style="width:20px;margin-right:5px;" mode='widthFix'></image>
-        构图
-        <view style="display:flex;text-align:center;width:80%;justify-content:center;align-items:center;"> 
-          <view class="contrast_a" bindtap="up_contrast" data-contrast_id="1" style="border:{{contrast_id==1?'solid 2px #000':'solid 2px #ccc'}};margin-right:30px;display:inline-block;width:34px;height:14px;padding:2px">
-            <view style="background-color:{{contrast_id==1?'#000':'#ccc'}};width:34px;height:14px;"></view>
+      
+  <view class='progress' style="width:{{progress_width}}%;height:{{progress_height}}px"></view>
+  <view class='condition_bottom' bindtap='up_condition' style="display:{{select?'flex':'none'}};">
+        <image src="../../../image/select.png" style='width:30px;margin-right:10px;' mode="widthFix"></image>
+        筛选
+  </view>
+  <view class="condition" style="height:{{condition_height}}" data-data_id="condition">
+    <scroll-view class='condition_info' style="height:{{condition_info_height}};overflow:hidden">
+      <view class="condition_infos" style="max-height:{{condition_infos_height}}px;overflow:scroll;display:{{display}}">
+        <view class="condition_cate condition_">
+          <view class="cate_text">
+            <image src="../../../image/search.png" style="width:20px;margin-right:5px;float:left;" mode='widthFix'></image>
+            <input style="" name="searchInfo" bindinput ="searchInfoInput" type="text" placeholder="请输入关键词" class="search_input"></input>
           </view>
-          <view class="contrast_a" bindtap="up_contrast" data-contrast_id="2" style="border:{{contrast_id==2?'solid 2px #000':'solid 2px #ccc'}};margin-right:30px;display:inline-block;width:14px;height:34px;padding:2px">
-            <view style="background-color:{{contrast_id==2?'#000':'#ccc'}};width:14px;height:34px;"></view>
+        <view>
+      </view>
+        </view>
+        <view class="condition_cate condition_">
+          <view class="cate_text">
+            <image src="../../../image/cate.png" style="width:20px;margin-right:5px" mode='widthFix'></image>
+            类别
           </view>
-          <view class="contrast_a" bindtap="up_contrast" data-contrast_id="3" style="border:{{contrast_id==3?'solid 2px #000':'solid 2px #ccc'}};margin-right:30px;display:inline-block;width:25px;height:25px;padding:2px">
-            <view style="background-color:{{contrast_id==3?'#000':'#ccc'}};width:25px;height:25px;"></view> 
+          <view>
+            <view bindtap='up_cate_id' style="color:{{cate_id==item.id?'#fff':'#000'}};background-color:{{cate_id==item.id?'#000':'rgb(240,240,240)'}};font-weight:{{cate_id==item.id?'bold':'100'}}" data-cate_id="{{item.id}}" class="condition_text" wx:for="{{cate_name}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
+            {{item.category_name}}
+            </view>
+          </view>
+        </view>
+      <view class="condition_theme condition_">
+      <view class="cate_text">
+        <image src="../../../image/theme.png" style="width:20px;margin-right:5px" mode='widthFix'></image>
+        主题
+        <!-- <text style="display:inline-block;">主题</text> -->
+      </view>
+      <view>
+        <view bindtap='up_theme_id' style="color:{{theme_id==item.id?'#fff':'#000'}};background-color:{{theme_id==item.id?'#000':'rgb(240,240,240)'}};font-weight:{{theme_id==item.id?'bold':'100'}}" data-theme_id="{{item.id}}" class="condition_text" wx:for="{{theme_name}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
+          {{item.theme_name}}
+        </view>
+      </view>
+      </view>
+      <view class="condition_color condition_">
+      <view class="cate_text">
+        <image src="../../../image/color.png" style="width:20px;margin-right:5px" mode='widthFix'></image>
+        颜色
+        <!-- <text style="display:inline-block;">颜色</text> -->
+      </view>
+      <view>
+        <view bindtap='up_color_id' class="color_view" data-color_id="1" style="border:{{color_id==1?'3px solid #000':'3px solid #fff'}};background-color:rgb(255,0,0);"></view>
+        <view bindtap='up_color_id' class="color_view" data-color_id="2" style="border:{{color_id==2?'3px solid #000':'3px solid #fff'}};background-color:rgb(255,150,0);"></view>
+        <view bindtap='up_color_id' class="color_view" data-color_id="3" style="border:{{color_id==3?'3px solid #000':'3px solid #fff'}};background-color:rgb(255,255,0);"></view>
+        <view bindtap='up_color_id' class="color_view" data-color_id="4" style="border:{{color_id==4?'3px solid #000':'3px solid #fff'}};background-color:rgb(0,255,0);"></view>
+        <view bindtap='up_color_id' class="color_view" data-color_id="5" style="border:{{color_id==5?'3px solid #000':'3px solid #fff'}};background-color:rgb(0,255,255);"></view>
+        <view bindtap='up_color_id' class="color_view" data-color_id="6" style="border:{{color_id==6?'3px solid #000':'3px solid #fff'}};background-color:rgb(0,0,255);"></view>
+        <view bindtap='up_color_id' class="color_view" data-color_id="7" style="border:{{color_id==7?'3px solid #000':'3px solid #fff'}};background-color:rgb(100,50,150);"></view>
+        <view bindtap='up_color_id' class="color_view" data-color_id="8" style="border:{{color_id==8?'3px solid #000':'3px solid #fff'}};background-color:rgb(255,150,255);"></view>
+        <view bindtap='up_color_id' class="color_view" data-color_id="9" style="border:{{color_id==9?'3px solid #000':'3px solid rgb(240,240,240)'}};background-color:rgb(255,255,255);"></view>
+        <view bindtap='up_color_id' class="color_view" data-color_id="10" style="border:{{color_id==10?'3px solid #000':'3px solid #fff'}};background-color:rgb(0,0,0);"></view>
+        <view bindtap='up_color_id' class="color_view" data-color_id="11" style="border:{{color_id==11?'3px solid #000':'3px solid #fff'}};background-color:rgb(120,120,120);"></view>
+      </view>
+      </view>
+      <view class="condition_color condition_">
+        <view class="cate_text2">
+          <image src="../../../image/composition.png" style="width:20px;margin-right:5px;" mode='widthFix'></image>
+          构图
+          <view style="display:flex;text-align:center;width:80%;justify-content:center;align-items:center;"> 
+            <view class="contrast_a" bindtap="up_contrast" data-contrast_id="1" style="border:{{contrast_id==1?'solid 2px #000':'solid 2px #ccc'}};margin-right:30px;display:inline-block;width:34px;height:14px;padding:2px">
+              <view style="background-color:{{contrast_id==1?'#000':'#ccc'}};width:34px;height:14px;"></view>
+            </view>
+            <view class="contrast_a" bindtap="up_contrast" data-contrast_id="2" style="border:{{contrast_id==2?'solid 2px #000':'solid 2px #ccc'}};margin-right:30px;display:inline-block;width:14px;height:34px;padding:2px">
+              <view style="background-color:{{contrast_id==2?'#000':'#ccc'}};width:14px;height:34px;"></view>
+            </view>
+            <view class="contrast_a" bindtap="up_contrast" data-contrast_id="3" style="border:{{contrast_id==3?'solid 2px #000':'solid 2px #ccc'}};margin-right:30px;display:inline-block;width:25px;height:25px;padding:2px">
+              <view style="background-color:{{contrast_id==3?'#000':'#ccc'}};width:25px;height:25px;"></view> 
+            </view>
           </view>
         </view>
       </view>
-    </view>
-    
-    </view>
-    <view class="clearfix" style="position:absolute;bottom:0px;width:98%;padding:1%;">
-      <text bindtap='reset' class='condition_btn' style="float: left;">重置</text>
-      <text bindtap='condition_search' class='condition_btn1' style="float: right;">筛选</text>
-    </view>
-    <view class='condition_bottom' bindtap='up_condition' style="display:{{select?'flex':'none'}};">
-      <image src="../../../image/select.png" style='width:30px;margin-right:10px;' mode="widthFix"></image>
-      筛选
+      
+      </view>
+      <view class="clearfix" style="position:absolute;bottom:0px;width:98%;padding:1%;">
+        <text bindtap='reset' class='condition_btn' style="float: left;">重置</text>
+        <text bindtap='condition_search' class='condition_btn1' style="float: right;">筛选</text>
+      </view>
+      
+    </scroll-view>
+    <view catchtap='hide_condition' style="height:{{hide_height}};width:100%;background-color:rgba(0,0,0,0.4);z-index: 999;"></view>
+  </view>
+  <scroll-view scroll-y  data-cate_id="{{cate_img_left[0].cate_id}}" data-label_id="{{label_id}}" data-theme_id="{{theme_id}}" data-search_val="{{search_val}}" data-offset_start="{{imgcount}}" data-img_info_left="{{cate_img_left}}" data-img_info_right="{{cate_img_right}}" style="height:{{height}}px;" class="content_list" bindscrolltolower="loadimg">
+    <view style='overflow:hidden;'>
+      <view class="scroll_view" wx:if="{{cate_info}}">
+        <scroll-view class="cate_scroll_x" scroll-x>
+          <view class="list_box" data-cate_id="{{item.id}}" wx:for="{{cate_info}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}" bindtap="jump_list">
+                    <image mode='widthFix' src="{{item.face_img}}" class="cate_img"></image>
+                    <text class="cate_img_text">{{item.category_name}}</text>
+          </view>
+        </scroll-view>
+      </view>
+      <view class="clearfix" catchtouchmove="{{touch_move}}">
+        <view style="width:50%;float:left" id="cate_img_left">
+          <view bindtap="{{jump_details}}" class="list {{is_to_keep==item.id?'click':'click_end'}}" bindlongpress="touchstart2" bindtouchend="touchEnd2" bindtouchmove="{{touchMove2}}" data-image="{{item.image}}" data-imgid="{{item.id}}" data-category="{{item.category}}" data-theme="{{item.theme}}" wx:for="{{cate_img_left}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}" >
+            <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
+          </view>
+        </view>
+        <view style="width:50%;float:right" id="cate_img_right">
+          <view bindtap="{{jump_details}}" class="list {{is_to_keep==item.id?'click':'click_end'}}" bindlongpress="touchstart" bindtouchend="touchEnd" bindtouchmove="{{touchMove}}" data-image="{{item.image}}" data-imgid="{{item.id}}" data-category="{{item.category}}" data-theme="{{item.theme}}" wx:for="{{cate_img_right}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
+            <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
+          </view>
+        </view>
+      </view>
     </view>
   </scroll-view>
-  <view catchtap='hide_condition' style="height:{{hide_height}};width:100%;background-color:rgba(0,0,0,0.4);z-index: 999;"></view>
-</view>
-<scroll-view  scroll-y data-cate_id="{{cate_img_left[0].cate_id}}" data-theme_id="{{theme_id}}" data-search_val="{{search_val}}" data-offset_start="{{imgcount}}" data-img_info_left="{{cate_img_left}}" data-img_info_right="{{cate_img_right}}" style="height:{{height}}px;" class="content_list" bindscrolltolower="loadimg">
-  <view style='margin-top:30px;'>
-    <view class="scroll_view" wx:if="{{cate_info}}">
-      <scroll-view class="cate_scroll_x" scroll-x>
-        <view class="list_box" data-cate_id="{{item.id}}" wx:for="{{cate_info}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}" bindtap="jump_list">
-                  <image mode='widthFix' src="{{item.face_img}}" class="cate_img"></image>
-                  <text class="cate_img_text">{{item.category_name}}</text>
-        </view>
-      </scroll-view>
-    </view>
-    <view class="clearfix">
-      <view style="width:50%;float:left" id="cate_img_left">
-        <view class="list" bindtap="jump_details" wx:for="{{cate_img_left}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
-          <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
-        </view>
-      </view>
-      <view style="width:50%;float:right" id="cate_img_right">
-        <view class="list" bindtap="jump_details" wx:for="{{cate_img_right}}" wx-for-index="index" wx-for-item="item" id="{{item.id}}">
-          <image class="img_item" src="{{item.image}}" mode="widthFix"></image>
-        </view>
-      </view>
-    </view>
-  </view>
 </scroll-view>
-

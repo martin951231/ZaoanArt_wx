@@ -1,0 +1,12 @@
+/* pages/index/details/to_keepimg.wxss */
+.add_keep_icon{
+  font-size: 40px;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  background-color: #000;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}

@@ -1,15 +1,128 @@
 <!--pages/find/keepimg/keepimg.wxml-->
+<!-- 修改收藏夹模态框 -->
+<view style="display:{{longtap}};width:100vw;height:100%;position:absolute;z-index:9999;background-color:rgba(0,0,0,0.4);overflow:hidden" catchtouchmove="preventTouchMove"></view>
+<view style="display:{{to_keep_icon_hide}};align-items: center;justify-content: center;background-color:#fff;border-radius:5px;width: 100px;height: 50px;position: absolute;z-index:999999;margin-left:{{touch_position_x}}px;margin-top:{{touch_position_y}}px">
+      <image id="to_keep_icon" src="../../../image/to_keep.png" style="width:30px;height:30px;margin-right: 7px;"></image>
+      <text style='font-size: 20px;'>收藏</text>
+    </view>
+     <view wx:if="{{keep_lately_info[0]}}" animation="{{ani1}}" style="display:flex;position: absolute;z-index:999999;opacity:{{opacity}};transition: all 0.2s linear;transform:{{transform1}};margin-left:{{touch_position_x1}}px;margin-top:{{touch_position_y1}}px" class="lately_keep2">
+        <view style="width:60px;height:60px;text-align:center;" data-uid="{{keep_lately_info[0].uid}}" data-keep_id="{{keep_lately_info[0].id}}" >
+          <image src="{{keep_lately_info[0].image}}" style="width:40px;height:40px;border-radius:50%;"></image>
+          <view style="font-size:13px;width: 60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{keep_lately_info[0].keep_name}}</view>
+        </view>
+      </view>
+      <!-- transition:1000ms ease 0ms;transform:translate({{touch_position_x2}}px,{{touch_position_y2}}px) -->
+      <!-- margin-left:{{touch_position_x2}};margin-top:{{touch_position_y2}} -->
+      <view wx:if="{{keep_lately_info[1]}}" animation="{{ani2}}" style="display:flex;position: absolute;z-index:999999;opacity:{{opacity}};transition: all 0.2s linear;transform:{{transform2}};margin-left:{{touch_position_x2}}px;margin-top:{{touch_position_y2}}px" class="lately_keep2">
+        <view style="width:60px;height:60px;text-align:center;" data-uid="{{keep_lately_info[1].uid}}" data-keep_id="{{keep_lately_info[1].id}}" >
+          <image src="{{keep_lately_info[1].image}}" style="width:40px;height:40px;border-radius:50%;"></image>
+          <view style="font-size:13px;width: 60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{keep_lately_info[1].keep_name}}</view>
+        </view>
+      </view>
+      <!-- transition:1000ms ease 0ms;transform:translate({{touch_position_x3}}px,{{touch_position_y3}}px) rotate(30deg) -->
+      <!-- margin-left:{{touch_position_x3}};margin-top:{{touch_position_y3}} -->
+      <view wx:if="{{keep_lately_info[2]}}" animation="{{ani3}}" style="display:flex;position: absolute;z-index:999999;opacity:{{opacity}};transition: all 0.2s linear;transform:{{transform3}};margin-left:{{touch_position_x3}}px;margin-top:{{touch_position_y3}}px" class="lately_keep2">
+        <view style="width:60px;height:60px;text-align:center;" data-uid="{{keep_lately_info[2].uid}}" data-keep_id="{{keep_lately_info[2].id}}" >
+          <image src="{{keep_lately_info[2].image}}" style="width:40px;height:40px;border-radius:50%;"></image>
+          <view style="font-size:13px;width: 60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{keep_lately_info[2].keep_name}}</view>
+        </view>
+      </view>
+  <view style="z-index: 9999999;width: 100vw;height: 100vh;justify-content: center;align-items: center;background-color: rgba(0,0,0,0.4);position: absolute;display:{{hiddenmodalput4?'none':'flex'}}">
+    <view style="margin-top:{{input_margin}};width: 75vw;height:35vw;background-color:#fff;border-radius:3px;position: relative;text-align: center;overflow: hidden;">
+      <view style="width:100%;font-size: 16px;font-weight: bold;width: 100%;font-size: 16px;font-weight: bold;margin: 10px 0px;">修改收藏夹名</view>
+      <view style="text-align: left;margin-left: 20px;">
+        <input bindinput='keepname2' type='text' bindfocus="get_focus" bindblur="lose_focus" placeholder="请输入收藏夹名..." auto-focus/>
+      </view>
+      <view style="display:inline-block;width: 100%;position: absolute;bottom: 0px;left: 0px;border-top: 1px solid #ccc;">
+        <view bindtap="cancelM4" style="display: inline-block;width: 50%;height: 40px;line-height: 40px;">取消</view>
+        <view bindtap="confirmM4" style="background-color:#000;color:#fff;width:50%;margin-right: -1%;display: inline-block;width: 50%;height: 40px;line-height: 40px;">修改</view>
+      </view>
+    </view>
+  </view>
+<!-- 修改收藏夹模态框 -->
+<!-- 删除收藏夹模态框 -->
+  <view bindtap="cancelM5" catchtouchmove="touch_move" style="z-index: 9999999;width: 100vw;height: 100vh;justify-content: center;align-items: center;background-color: rgba(0,0,0,0.4);position: absolute;display:{{hiddenmodalput5?'none':'flex'}}">
+    <view style="width: 75vw;height:40vw;background-color:#fff;border-radius:3px;position: relative;text-align: center;overflow: hidden;">
+      <view style="width:100%;font-size: 16px;font-weight: bold;width: 100%;font-size: 16px;font-weight: bold;margin: 10px 0px;">删除收藏夹</view>
+      <view style="text-align: left;margin-left: 20px;padding:0px 15px;">
+        删除收藏夹将会删除收藏夹里所有图片,您确定要删除吗?
+      </view>
+      <view style="display:inline-block;width: 100%;position: absolute;bottom: 0px;left: 0px;border-top: 1px solid #ccc;">
+        <view bindtap="cancelM5" style="display: inline-block;width: 50%;height: 40px;line-height: 40px;">取消</view>
+        <view bindtap="confirmM5" style="background-color:#000;color:#fff;width:50%;margin-right: -1%;display: inline-block;width: 50%;height: 40px;line-height: 40px;">删除</view>
+      </view>
+    </view>
+  </view>
+<!-- 删除收藏夹模态框 -->
+<!-- 删除收藏夹图片模态框 -->
+  <view bindtap="cancelM1" catchtouchmove="touch_move" style="z-index: 9999999;width: 100vw;height: 100vh;justify-content: center;align-items: center;background-color: rgba(0,0,0,0.4);position: absolute;display:{{hiddenmodalput1?'none':'flex'}}">
+    <view style="width: 75vw;height:35vw;background-color:#fff;border-radius:3px;position: relative;text-align: center;overflow: hidden;">
+      <view style="width:100%;font-size: 16px;font-weight: bold;width: 100%;font-size: 16px;font-weight: bold;margin: 10px 0px;">删除收藏夹图片</view>
+      <view style="text-align: left;margin-left: 20px;padding:0px 15px;">
+        您确定要删除吗?
+      </view>
+      <view style="display:inline-block;width: 100%;position: absolute;bottom: 0px;left: 0px;border-top: 1px solid #ccc;">
+        <view bindtap="cancelM1" style="display: inline-block;width: 50%;height: 40px;line-height: 40px;">取消</view>
+        <view bindtap="confirmM1" style="background-color:#000;color:#fff;width:50%;margin-right: -1%;display: inline-block;width: 50%;height: 40px;line-height: 40px;">删除</view>
+      </view>
+    </view>
+  </view>
+<!-- 删除收藏夹图片模态框 -->
+<!-- 重命名收藏夹模态框 -->
+  <view bindtap="edit_name_hide" catchtouchmove="touch_move" style="z-index: 9999999;width: 100vw;height: 100vh;justify-content: center;align-items: center;background-color: rgba(0,0,0,0.4);position: absolute;display:{{hiddenmodalput6?'none':'flex'}}">
+    <view style="width: 75vw;height:100px;background-color:#fff;border-radius:3px;position: relative;text-align: center;overflow: hidden;">
+      <view class="edit_name_btn" bindtap="rename">重命名</view>
+      <view style="width:100%;height:1px;border-top:1px solid #ccc;"></view>
+      <view class="edit_name_btn" bindtap="delkeep">删除</view>
+      <view style="width:100%;height:1px;border-top:1px solid #000;"></view>
+    </view>
+  </view>
+<!-- 重命名收藏夹模态框 -->
 <scroll-view scroll-y data-keep_id="{{keep_id}}" data-offset_start="{{imgcount}}" bindscrolltolower="loadimg3" style="height:{{height}}px;">
-  <modal hidden="{{hiddenmodalput1}}" data-keep_id="{{keep_id}}" title="从收藏夹中删除" confirm-text="删除" cancel-text="取消" bindcancel="cancelM1" bindconfirm="confirmM1">
+  <!-- <modal hidden="{{hiddenmodalput1}}" data-keep_id="{{keep_id}}" title="从收藏夹中删除" confirm-text="删除" cancel-text="取消" bindcancel="cancelM1" bindconfirm="confirmM1">
     <button></button>
-  </modal>
-  <modal hidden="{{hiddenmodalput2}}" data-keep_id="{{keep_id}}" no-cancel="true" title="移动到其他收藏夹" confirm-text="取消" bindconfirm="cancelM2">
-  <view class="modal_view" data-to_keep_id="{{item.id}}" wx:for="{{keep_info}}" wx-for-index="index" wx-for-item="item" bindtap="move_to_keep">{{item.keep_name}}</view>
-  </modal>
-  <modal hidden="{{hiddenmodalput3}}" data-keep_id="{{keep_id}}" no-cancel="true" title="复制到其他收藏夹"  confirm-text="取消" bindconfirm="cancelM3">
-  <view class="modal_view" data-to_keep_id="{{item.id}}" wx:for="{{keep_info1}}" wx-for-index="index" wx-for-item="item" bindtap="copy_to_keep">{{item.keep_name}}</view>
-  </modal>
-<button wx:if="{{is_mykeep==2}}" bindtap="batch_update">管理</button>
+  </modal> -->
+  <!-- <modal hidden="{{hiddenmodalput2}}" data-keep_id="{{keep_id}}" no-cancel="true" title="移动到其他收藏夹" confirm-text="取消" bindconfirm="cancelM2">
+  </modal> -->
+  <!-- <view style="display:{{hiddenmodalput2?'none':'block'}};width:100vw;height:100vh;background-color:#fff;position: absolute;z-index: 999;">
+    <text style='' bindtap="hiddenmodalput2_hidden">×</text>
+    <view class="modal_view" data-to_keep_id="{{item.id}}" wx:for="{{keep_info}}" wx-for-index="index" wx-for-item="item" bindtap="move_to_keep">{{item.keep_name}}</view>
+  </view> -->
+  <!-- <modal hidden="{{hiddenmodalput3}}" data-keep_id="{{keep_id}}" no-cancel="true" title="复制到其他收藏夹"  confirm-text="取消" bindconfirm="cancelM3">
+    <view class="modal_view" data-to_keep_id="{{item.id}}" wx:for="{{keep_info1}}" wx-for-index="index" wx-for-item="item" bindtap="copy_to_keep">{{item.keep_name}}</view>
+  </modal> -->
+  <!-- <modal hidden="{{hiddenmodalput4}}" title="修改收藏夹名" confirm-text="提交" cancel-text="取消" bindcancel="cancelM4" bindconfirm="confirmM4">
+    <input bindinput='keepname2' type='text' placeholder="请输入收藏夹名..." auto-focus/>
+  </modal> -->
+  <!-- <modal hidden="{{hiddenmodalput5}}" title="删除收藏夹" confirm-text="删除" cancel-text="取消" bindcancel="cancelM5" bindconfirm="confirmM5">
+    <text>删除收藏夹将会删除收藏夹里所有图片,您确定要删除吗?</text>
+  </modal> -->
+  <view>
+    <view style="display:inline-block">
+      <view style="font-size: 25px;margin: 5px;">
+        <view style="width:60vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{keep_name}}</view>
+      </view>
+      <view style="font-size: 18px;margin: 5px;">
+        <text style="font-size: 18px;">{{count}} 个</text>
+        <text style="font-size: 18px;margin-left:50px">{{attention_num}} 热度</text>
+      </view>
+    </view>
+    <view wx:if="{{is_mykeep==2}}" data-is_mykeep="{{is_mykeep}}" style="float:right;margin: 10px 20px;">
+      <image mode="aspectFill" src="{{icon}}" style="max-height:100px;max-width:100px;width:50px;height:50px;border-radius:50%"></image>
+    </view>
+    <view wx:else data-is_mykeep="{{is_mykeep}}" style="float:right;margin: 10px 20px;" bindtap="current_user" data-uid="{{uid}}">
+      <image mode="aspectFill" src="{{icon}}" style="max-height:100px;max-width:100px;width:50px;height:50px;border-radius:50%"></image>
+    </view>
+  </view>
+  <view wx:if="{{is_mykeep==1}}">
+    <view wx:if="{{is_attention}}" bindtap="del_attention" data-keep_id="{{keep_id}}" style="display:inline-block;color:#fff;background-color:#000;font-size: 12px;border:1px solid #000;font-weight: bold;padding: 2px 10px 2px 10px;margin:5px;">已关注</view>
+    <view wx:if="{{!is_attention}}" bindtap="add_attention" data-keep_id="{{keep_id}}" style="display:inline-block;font-size: 12px;border:1px solid #000;font-weight: bold;padding: 2px 10px 2px 10px;margin:5px;">+关注</view>
+  </view>
+  <view wx:if="{{is_mykeep==2}}" style="margin: 5px;">
+    <image src="../../../image/edit_keep.png" style="width:20px;margin-right:20px" mode="widthFix" bindtap="edit_name"></image>
+    <image src="../../../image/set_up.png" style="width:20px;margin-right:20px" mode="widthFix"  bindtap="batch_update"></image>
+  </view>
+<!-- <view style="display:inline-block" wx:if="{{is_mykeep==2}}" bindtap="batch_update">管理</view> -->
 <view wx:if="{{is_manage}}">
   <button bindtap="batch_delete" class="batch" style="bottom:100px">删除</button>
   <button bindtap="batch_move" class="batch" style="bottom:50px">移动到...</button>
@@ -17,28 +130,27 @@
 </view>
 <view>
 </view>
-  <view class="keepimg_view"> 
+  <!-- <view class="keepimg_view"> 
     <text class="">{{keep_name}}</text>
-  </view>
+  </view> -->
   <checkbox-group wx:if="{{is_manage}}">
     <checkbox bindtap="checkbox_all" checked="{{is_checkbox_all}}"/>全选
   </checkbox-group>
-  <view class="keep_image">
-    <view style="width:50%;float:left" id="cate_img_left">
-        <view class="list"  wx:for="{{cate_img_left}}" wx-for-index="index" wx-for-item="item" wx:key="item">
-        <checkbox-group wx:if="{{is_manage}}">
-          <checkbox class="checkbox" value="{{item.id}}" bindtap="checkbox" data-left_index="{{index}}" checked="{{item.checked}}"/>
-        </checkbox-group>
-          <image class="img_item" bindtap="jump_details" id="{{item.id}}" src="{{item.image}}" mode="widthFix"></image>
-        </view>
-
-    </view>
+  <view class="keep_image" catchtouchmove="{{touch_move}}">
+      <view style="width:50%;float:left" id="cate_img_left">
+          <view class="list {{is_to_keep==item.id?'click':'click_end'}}"  style="position: relative;"  wx:for="{{cate_img_left}}" wx-for-index="index" wx-for-item="item" wx:key="item">
+            <checkbox-group>
+              <checkbox style="width: 100%;height: 100%;" class="checkbox" wx:if="{{is_manage}}" value="{{item.id}}" bindtap="checkbox" data-left_index="{{index}}" checked="{{item.checked}}"/>
+            </checkbox-group>
+            <image class="img_item" bindtap="jump_details" data-image="{{item.image}}" data-imgid="{{item.id}}" data-category="{{item.category}}" data-theme="{{item.theme}}" bindlongpress="touchstart2" bindtouchend="touchEnd2" bindtouchmove="{{touchMove2}}" id="{{item.id}}" src="{{item.image}}" mode="widthFix"></image>
+          </view>
+      </view>
       <view style="width:50%;float:right" id="cate_img_right">
-        <view class="list"  wx:for="{{cate_img_right}}" wx-for-index="index" wx-for-item="item" wx:key="item">
+        <view class="list {{is_to_keep==item.id?'click':'click_end'}}"  wx:for="{{cate_img_right}}" wx-for-index="index" wx-for-item="item" wx:key="item">
         <checkbox-group wx:if="{{is_manage}}">
-          <checkbox class="checkbox" value="{{item.id}}" bindtap="checkbox2" data-right_index="{{index}}" checked="{{item.checked}}"/>
+          <checkbox style="width: 100%;height: 100%;" class="checkbox" value="{{item.id}}" bindtap="checkbox2" data-right_index="{{index}}" checked="{{item.checked}}"/>
         </checkbox-group>
-          <image class="img_item" bindtap="jump_details" id="{{item.id}}" src="{{item.image}}" mode="widthFix"></image>
+          <image class="img_item" bindtap="jump_details" data-image="{{item.image}}" data-imgid="{{item.id}}" data-category="{{item.category}}" data-theme="{{item.theme}}" bindlongpress="touchstart" bindtouchend="touchEnd" bindtouchmove="{{touchMove}}" id="{{item.id}}" src="{{item.image}}" mode="widthFix"></image>
         </view>
       </view>
   </view>

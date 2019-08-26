@@ -93,19 +93,20 @@
   /* overflow:scroll; */
 }
 .condition_bottom{
-  line-height:31px;
-  height:30px;
-  background-color:rgb(240,240,240);
-  width:100%;
-  position:absolute;
-  bottom:0px;
-  z-index:999;
-  font-size:20px;
-  font-weight:100;
-  color:#8a8a8a;
+  line-height: 31px;
+  height: 30px;
+  background-color: #000;
+  width: 30vw;
+  position: absolute;
+  right: 0px;
+  z-index: 999;
+  font-size: 20px;
+  font-weight: 100;
+  color: #fff;
   display: flex;
-  align-items:center;
-  justify-content:center;
+  align-items: center;
+  justify-content: center;
+  top: 20vw;
 }
 .color_view{
   display:inline-block;
@@ -165,6 +166,24 @@
   margin-right: 10px;
   font-size:15px;
   font-weight: 100;
+}
+.click{
+  position: relative;
+  z-index: 99999;
+  background-color: #fff;
+}
+.click_end{
+  position: '';
+  z-index: 0;
+}
+.lately_keep2{
+  width: 70px;
+  height: 70px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
 }
 /* 清楚浮动 */
 .clearfix:after { 

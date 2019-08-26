@@ -1,0 +1,7 @@
+/* pages/find/keepimg/to_keepimg.wxss */
+.clearfix:after { 
+  display:block; 
+  height : 0; 
+  clear : both; 
+  content : '' 
+}

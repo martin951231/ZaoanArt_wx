@@ -10,24 +10,22 @@
   padding-top:5px;
 }
 .cate_view{
-  margin: 10px 0px;
+  margin: 10px 5px;
   width: 100%;
   font-weight: bold;
   height:30px;
   line-height: 30px;
-  text-align: center;
+  text-align: left;
   color:#000;
-  background-color:rgb(240,240,240);
 }
 .theme_view{
-  margin: 10px 0px;
+  margin: 10px 5px;
   width: 100%;
   font-weight: bold;
-  text-align: center;
+  text-align: left;
   height:30px;
   line-height: 30px;
   color:#000;
-  background-color:rgb(240,240,240);
 }
 .cate_img_text{
   position:absolute;

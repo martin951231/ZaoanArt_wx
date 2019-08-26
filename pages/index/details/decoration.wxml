@@ -7,6 +7,10 @@
     <image style='z-index:999;' class="decoration_image" mode="widthFix" src="{{default_img}}" bindtap="enlarge" data-src="{{default_img}}"></image>
   </view>
   <view class="scroll_view">
+    <view class="img_info">
+      <view style="height: 20px;">IMAGE ID</view>
+      <view style="height: 20px;">{{img_id}}</view>
+    </view>
   <scroll-view scroll-x class="decoration_scroll_x">
     <view style="margin:5px 0px;">选择外框</view>
     <view data-series_id="{{item.id}}" bindtap="up_border" class="list_box" wx:for="{{border_series}}" wx-for-index="index" wx-for-item="item">
@@ -23,5 +27,14 @@
     <text class="text_info">自由裁切、自定义尺寸及更多装裱形式</text>
     <text class="text_info">请在PC端登陆早安艺术官方网站</text>
     <text class="text_info">www.ZAOANART.com</text>
+    <button class='button' open-type="contact">
+      <image src="../../../image/kefu.png" style="width:30px;height:30px;margin-right:5px;"></image>
+      <!-- <button open-type="contact">联系客服</button> -->
+      联系客服
+    </button>
+    <!-- <view style="margin-top:10px;display: flex;justify-content: center;align-items: center;">
+      <image src="../../../image/kefu.png" style="width:30px;height:30px;"></image>
+      <text>联系客服</text>
+    </view> -->
   </view>
 </scroll-view>

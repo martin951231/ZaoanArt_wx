@@ -1,0 +1,48 @@
+<!--pages/home/my_attention.wxml-->
+<view style="height: 120px;margin-top: 20px;padding-left:5px;">
+    <view style="font-weight: bold;">
+      <view style="font-size: 40px;">0</view>
+      <view>关注收藏夹</view>
+    </view>
+    <view style="position: absolute;right: 20px;top: 20px;width: 100px;height: 120px;">
+      <image src="{{icon}}" style="width:100px;height:100px;border-radius:50%"></image>
+      <view style="font-size: 15px;font-weight: bold;">
+        <view style="width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{username}}</view>
+      </view>
+    </view>
+</view>
+<scroll-view scroll-y>
+  <!-- <view class="cate_view">{{keep_info[0][0].username}}的收藏夹</view> -->
+  <view wx:if="{{keep_info}}" class="keep_view" wx:for="{{keep_info}}" wx:for-index="index"  wx:for-item="keep_info_item" wx:key="item">
+        <view class='gallery1' style="" bindtap="jump_keepimg" data-uid="{{keep_info_item[0].uid}}" data-keep_id="{{keep_info_item[0].keep_id}}" data-keep_name="{{keep_info_item[0].keep_name}}">
+          <view wx:if="{{keep_info_item[0].img_ratio == 1}}">
+            <image mode="aspectFill"  style="margin: 2px;width:48vw;height:33vw" src='{{keep_info_item[0].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:15vw;height:15vw" src='{{keep_info_item[1].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:15vw;height:15vw" src='{{keep_info_item[2].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:15vw;height:15vw" src='{{keep_info_item[3].image}}'></image>
+          </view>
+          <view wx:if="{{keep_info_item[0].img_ratio == 2}}">
+            <image mode="aspectFill"  style="margin: 2px;width:23vw;height:24vw" src='{{keep_info_item[0].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:23vw;height:24vw" src='{{keep_info_item[1].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:23vw;height:24vw" src='{{keep_info_item[2].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:23vw;height:24vw" src='{{keep_info_item[3].image}}'></image>
+          </view>
+          <view wx:if="{{keep_info_item[0].img_ratio == 3}}">
+            <image mode="aspectFill"  style="margin: 2px;width:30vw;height:24vw" src='{{keep_info_item[0].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:16vw;height:24vw" src='{{keep_info_item[1].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:16vw;height:24vw" src='{{keep_info_item[2].image}}'></image>
+            <image mode="aspectFill"  style="margin: 2px;width:30vw;height:24vw" src='{{keep_info_item[3].image}}'></image>
+          </view>
+        </view>
+            <view style="font-weight: bold;margin: 5px 5px;" data-keep_id="{{keep_info_item[0].keep_id}}">{{keep_info_item[0].keep_name}}</view>
+            <view style="margin:5px;align-items: center;display: flex;">
+              <view style="color:#a7a7a7;font-size: 12px;">{{keep_info_item[0].attention_num}}个关注</view>
+              <view wx:if="{{keep_info_item[0].is_attention==2}}" bindtap="del_attention" data-keep_id="{{keep_info_item[0].keep_id}}" style="color:#fff;background-color:#000;font-size: 12px;margin-left:15vw;border:1px solid #000;font-weight: bold;padding: 2px 10px 2px 10px;">已关注</view>
+            </view>
+  </view>
+  <view wx:if="{{!keep_info}}" style="width: 100vw;height: 300px;display: flex;align-items: center;justify-content: center;flex-direction:column;">
+     <image src="../../image/null.png" style="width:100px;height:100px;"></image>
+     <view style="">还没有关注的收藏夹</view>
+  </view>
+</scroll-view>
+
