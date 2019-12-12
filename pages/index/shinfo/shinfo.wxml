@@ -1,0 +1,51 @@
+<!--pages/index/shinfo/shinfo.wxml-->
+<view>
+  <view class="btm_about">
+      <image src='../../../image/zaoanart_logo_en_big.png' style='width:190px;height:8vh'></image>
+  </view>   
+  <view class="info1">
+    <text style="color: #fff;padding-top:10px;display:block;font-size:30px;">精品定制</text>
+    <text style="color: #fff;padding-top:10px;display:block;font-size:15px;">生活化影像产品定制</text>
+  </view>   
+</view>
+
+<view style="height:100vh;padding-left:5px;">
+  <view>
+
+    <view class="info_view">
+      <view class="info_view2">
+        <text class="info_text">姓名</text>
+      </view>
+      <input name="username" bindinput ="usernameInput" type="text" placeholder="收货人姓名" placeholder-style="font-size:13px" class="info_input"></input>
+    </view>
+
+    <view class="info_view">
+      <view class="info_view2">
+        <text class="info_text">电话</text>
+      </view>
+      <input name="tel" bindinput ="telInput" type="text" placeholder="收货人手机号" placeholder-style="font-size:13px" class="info_input"></input>
+    </view>
+
+    <view class="info_view">
+      <view class="info_view2">
+        <text class="info_text">地区</text>
+      </view>
+      <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+        <view class="picker" class="info_input" style="font-size: {{fontsize}}px;font-weight: {{fontweight}};">
+          {{region}}
+        </view>
+      </picker>
+      <!-- <input name="area" bindinput ="areaInput" type="text" placeholder="选择省/市/区" placeholder-style="font-size:13px" class="info_input"></input> -->
+    </view>
+
+    <view class="info_view">
+      <view class="info_view2">
+        <text class="info_text">详细地址</text>
+      </view>
+      <input name="address" bindinput ="addressInput" value="{{address}}" type="text" placeholder="街道门牌、楼层房间号等信息" placeholder-style="font-size:13px" class="info_input"></input>
+    </view>
+
+      <text class="intel_addre" bindtap="get_location">智能识别地址</text>
+  </view>
+  <button bindtap="save_btn" class="login_btn">保存并使用</button>
+</view>

@@ -13,6 +13,8 @@ Page({
     hiddenmodalput: true,
     hiddenmodalput2: true,
     hiddenmodalput3: true,
+    hiddenmodalput5: true,
+    hiddenmodalput6: true,
     modalstatus:false,
     keepname: '',
     keepname2:'',
@@ -94,6 +96,33 @@ Page({
   to_login(){
     wx.navigateTo({
       url: './login',
+    })
+  },
+  confirmM6(){
+    wx.navigateTo({
+      url: './login',
+    })
+  },
+  islogin(){
+    this.setData({
+      hiddenmodalput5: false,
+    })
+  },
+  islogin2() {
+    this.setData({
+      hiddenmodalput6: false,
+    })
+  },
+  //关闭模态框
+  cancelM5: function (e) {
+    this.setData({
+      hiddenmodalput5: true,
+    })
+  },
+  //关闭模态框
+  cancelM6: function (e) {
+    this.setData({
+      hiddenmodalput6: true,
     })
   },
   //添加收藏夹

@@ -33,6 +33,9 @@
         <text class="about_text" bindtap="hotspot">咨询热点</text>
         <text class="about_text" bindtap="statement">网站声明</text>
       </view>
+      <view>
+        <text class="" bindtap="shinfo">收货信息</text>
+      </view>
     </view>
 </view>     
 <!-- <view style="color:#000;background-color:rgb(240,240,240);text-align:center;" bindtap="to_leave_message">给我们留言</view>  -->

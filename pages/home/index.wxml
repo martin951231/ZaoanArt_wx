@@ -14,10 +14,38 @@
     </view>
   </view>
 <!-- 添加收藏夹模态框结束 -->
+<!-- 是否登录模态框 -->
+   <view bindtap="cancelM5" catchtouchmove="touch_move" style="z-index: 9999999;width: 100vw;height: 100vh;justify-content: center;align-items: center;background-color: rgba(0,0,0,0.4);position: absolute;display:{{hiddenmodalput5?'none':'flex'}}">
+    <view style="width: 75vw;height:40vw;background-color:#fff;border-radius:3px;position: relative;text-align: center;overflow: hidden;">
+      <view style="width:100%;font-size: 16px;font-weight: bold;width: 100%;font-size: 16px;font-weight: bold;margin: 10px 0px;"></view>
+      <view style="text-align: center;margin-top: 15%;">
+        您暂未登录,是否需要登录?
+      </view>
+      <view style="display:inline-block;width: 100%;position: absolute;bottom: 0px;left: 0px;border-top: 1px solid #ccc;">
+        <view bindtap="cancelM5" style="display: inline-block;width: 50%;height: 40px;line-height: 40px;">暂不登录</view>
+        <button bindtap="cancelM5" style="background-color:#000;color:#fff;width:50%;margin-right: -1%;display: inline-block;width: 50%;height: 40px;line-height: 40px;position: relative;border-radius: 0px;font-size: 15px;overflow: unset" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">立即登录</button>
+      </view>
+    </view>
+  </view>
+<!-- 是否登录模态框 -->
+<!-- 是否登录模态框 -->
+   <view bindtap="cancelM6" catchtouchmove="touch_move" style="z-index: 9999999;width: 100vw;height: 100vh;justify-content: center;align-items: center;background-color: rgba(0,0,0,0.4);position: absolute;display:{{hiddenmodalput6?'none':'flex'}}">
+    <view style="width: 75vw;height:40vw;background-color:#fff;border-radius:3px;position: relative;text-align: center;overflow: hidden;">
+      <view style="width:100%;font-size: 16px;font-weight: bold;width: 100%;font-size: 16px;font-weight: bold;margin: 10px 0px;"></view>
+      <view style="text-align: center;margin-top: 15%;">
+        您暂未登录,是否需要登录?
+      </view>
+      <view style="display:inline-block;width: 100%;position: absolute;bottom: 0px;left: 0px;border-top: 1px solid #ccc;">
+        <view bindtap="cancelM6" style="display: inline-block;width: 50%;height: 40px;line-height: 40px;">暂不登录</view>
+        <button bindtap="confirmM6" style="background-color:#000;color:#fff;width:50%;margin-right: -1%;display: inline-block;width: 50%;height: 40px;line-height: 40px;position: relative;border-radius: 0px;font-size: 15px;overflow: unset">立即登录</button>
+      </view>
+    </view>
+  </view>
+<!-- 是否登录模态框 -->
 <view class="login_none" style="width:100%;text-align:center;margin-top:50px;" wx:if="{{!token}}">
   <view>没有登录</view>
-  <button bindtap="to_login" class="login_btn">手机号登录</button>
-  <button open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber" class="login_btn2">微信登录</button>
+  <button bindtap="islogin2" class="login_btn">手机号登录</button>
+  <button class="login_btn2" bindtap="islogin">点击微信登录</button>
 </view>
 <view wx:else style='margin-left:5px'>
 <view style="height: 120px;margin-top: 20px;">
@@ -27,7 +55,7 @@
     </view>  
     <view bindtap="logout" style='float: left;font-size:15px;display: flex;align-items: center;justify-items: center;margin-right:10px;'>
       <image src="../../image/logout.png" style="width:20px;height:20px;margin-right:5px;"></image>
-      注销
+      退出登录
     </view>
     <view bindtap="edit_user" style='float: left;font-size:15px;display: flex;align-items: center;justify-items: center;'>
       <image src="../../image/set_user.png" style="width:20px;height:20px;margin-right:5px;"></image>

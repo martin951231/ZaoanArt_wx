@@ -135,6 +135,12 @@ Page({
       url: '../leave_message',
     })
   },
+  //跳转到收货信息页面
+  shinfo() {
+    wx.navigateTo({
+      url: './shinfo/shinfo',
+    })
+  },
   /**
   * 生命周期函数--监听页面初次渲染完成
   */

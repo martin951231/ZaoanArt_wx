@@ -1,4 +1,5 @@
 // pages/index/details/details.js
+const IS_WEB = 'IS_WEB';
 Page({
 
   /**
@@ -225,6 +226,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if(options.is_web == 1){
+      wx.setStorage({
+        key: IS_WEB,
+        data: 1,//为网站扫码跳转
+      });
+    }else{
+      wx.setStorage({
+        key: IS_WEB,
+        data: 2,//为小程序跳转
+      });
+    }
     var img_id = options.img_id
     //获取图片详情
     this.getimg(img_id)
@@ -401,7 +413,7 @@ Page({
       longtap: 'block',
       jump_details: '',
       touch_position_x: start_X - 50,
-      touch_position_y: start_Y - 50,
+      touch_position_y: start_Y - 80,
       touch_position_x1: start_X - 35,
       touch_position_y1: start_Y - 60,
       touch_position_x2: start_X - 35,
@@ -519,7 +531,7 @@ Page({
       longtap: 'block',
       jump_details: '',
       touch_position_x: start_X - 50,
-      touch_position_y: start_Y - 50,
+      touch_position_y: start_Y - 80,
       touch_position_x1: start_X - 35,
       touch_position_y1: start_Y - 60,
       touch_position_x2: start_X - 35,

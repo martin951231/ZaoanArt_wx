@@ -1,4 +1,5 @@
 <!--pages/index/details/details.wxml-->
+<add-tips />
   <view style="display:{{longtap}};width:100vw;height:100%;position:absolute;z-index:9999;background-color:rgba(0,0,0,0.4);overflow:hidden" catchtouchmove="preventTouchMove"></view>
     <view style="display:{{to_keep_icon_hide}};align-items: center;justify-content: center;background-color:#fff;border-radius:5px;width: 100px;height: 50px;position: absolute;z-index:999999;margin-left:{{touch_position_x}}px;margin-top:{{touch_position_y}}px">
       <image id="to_keep_icon" src="../../../image/to_keep.png" style="width:30px;height:30px;margin-right: 7px;"></image>

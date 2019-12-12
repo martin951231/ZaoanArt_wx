@@ -81,9 +81,12 @@
   display:flex;
   justify-content:left;
   align-items:center;
+  overflow: unset
 }
 button::after {
- border: none
+ border: none;
+ font-size: '';
+ overflow: unset
 }
 /* 清楚浮动 */
 .clearfix:after { 
